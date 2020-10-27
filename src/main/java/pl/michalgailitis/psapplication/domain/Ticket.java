@@ -33,7 +33,7 @@ public class Ticket {
 
     @NotNull
     @Column(name = "ticket_type")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
     @NotNull
@@ -41,32 +41,12 @@ public class Ticket {
     private LocalDate createdOn;
 
     @NotNull
-  //  @Column(name = "author")
     @ManyToOne
-    @JoinColumn(name = "author_id")
     private User author;
 
     @NotNull
- //   @Column(name = "responsible")
     @ManyToOne
-    @JoinColumn(name = "responsible_id")
     private User responsible;
-
-//    @NotNull
-//    @Column(name = "authorId")
-//    private String authorId;
-//
-//    @NotNull
-//    @Column(name = "authorNameAndSurename")
-//    private String authorNameAndSurename;
-//
-//    @NotNull
-//    @Column(name = "responsibleId")
-//    private String responsibleId;
-//
-//    @NotNull
-//    @Column(name = "responsibleNameAndSurename")
-//    private String responsibleNameAndSurename;
 
     @NotNull
     @Column(name = "status")
@@ -74,7 +54,6 @@ public class Ticket {
     private Status status;
 
     @NotNull
- //   @Column(name = "comment")
     @OneToMany
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
