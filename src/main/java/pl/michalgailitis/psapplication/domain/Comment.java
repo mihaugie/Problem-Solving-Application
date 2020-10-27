@@ -30,10 +30,8 @@ public class Comment {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "author_id")
     private User author;
 
-    @JsonIgnore
     @ManyToOne
     private Ticket ticket;
 

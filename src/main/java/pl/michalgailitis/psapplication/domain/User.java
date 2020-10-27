@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -37,8 +37,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToOne
-    @JsonIgnore
-    private Ticket ticket;
+    @OneToMany
+    @JoinColumn(name="tickets_as_author")
+    private List<Ticket> tickets_as_author;
+
+    @OneToMany
+    @JoinColumn(name="tickets_as_responsible")
+    private List<Ticket> tickets_as_responsible;
 
 }
