@@ -38,11 +38,13 @@ public class User {
     private Role role;
 
     @OneToMany
-    @JoinColumn(name="tickets_as_author")
+    @JoinColumn(name="author_email")
+    @JsonIgnore
     private List<Ticket> tickets_as_author;
 
     @OneToMany
-    @JoinColumn(name="tickets_as_responsible")
+    @JoinColumn(name="responsible_email")
+    @JsonIgnore
     private List<Ticket> tickets_as_responsible;
 
 }

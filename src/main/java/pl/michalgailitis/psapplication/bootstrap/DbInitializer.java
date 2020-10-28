@@ -52,6 +52,5 @@ public class DbInitializer implements CommandLineRunner {
         commentRepository.save(comment24);
         commentRepository.save(comment25);
 
-
     }
 }

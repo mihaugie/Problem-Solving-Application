@@ -55,7 +55,7 @@ public class Ticket {
 
     @NotNull
     @OneToMany
-    @JoinColumn(name = "comment_id")
+    @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
 
