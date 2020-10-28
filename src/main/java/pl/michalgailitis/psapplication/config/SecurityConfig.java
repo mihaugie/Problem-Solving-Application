@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .csrf().ignoringAntMatchers("/h2/**")
-                .and()
+                .and().csrf().disable()
                 .headers().frameOptions().disable();
 
     }
