@@ -53,7 +53,6 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @NotNull
     @OneToMany
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;

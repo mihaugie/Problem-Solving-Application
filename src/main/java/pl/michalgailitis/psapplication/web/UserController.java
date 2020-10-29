@@ -30,10 +30,10 @@ public class UserController {
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
     }
-    @DeleteMapping("/{mail}")
+    @DeleteMapping("/{email}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable final String mail){
-        userService.deleteUser(mail);
+    public void deleteUser(@PathVariable(name = "email") final String email){
+        userService.deleteUser(email);
     }
 
 }
