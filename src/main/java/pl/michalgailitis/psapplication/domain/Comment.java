@@ -30,9 +30,11 @@ public class Comment {
 
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private User author;
 
     @ManyToOne
+    @JsonIgnore
     private Ticket ticket;
 
 
