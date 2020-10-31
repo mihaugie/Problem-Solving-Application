@@ -32,11 +32,11 @@ public class DbInitializer implements CommandLineRunner {
         final Ticket ticket3 = new Ticket(null, "Ticket title 3", "Desc 3", "Solution 3", TicketType.PROBLEM, LocalDate.now(), user2, user1, Status.CLOSED, List.of());
         final Ticket ticket4 = new Ticket(null, "Ticket title 4", "Desc 4", "Solution 4", TicketType.TODO, LocalDate.now(), user1, user2, Status.OPEN, List.of());
         Comment comment1 = new Comment(null, "Comment desc 1", LocalDate.now(), user1, ticket1);
-        Comment comment21 = new Comment(null, "Comment desc 21", LocalDate.now(), user1, ticket2);
-        Comment comment22 = new Comment(null, "Comment desc 22", LocalDate.now(), user1, ticket2);
-        Comment comment23 = new Comment(null, "Comment desc 23", LocalDate.now(), user2, ticket2);
-        Comment comment24 = new Comment(null, "Comment desc 24", LocalDate.now(), user3, ticket3);
-        Comment comment25 = new Comment(null, "Comment desc 25", LocalDate.now(), user3, ticket4);
+        Comment comment21 = new Comment(null, "Ticket2: Comment desc 21", LocalDate.now(), user1, ticket2);
+        Comment comment22 = new Comment(null, "Ticket2: Comment desc 22", LocalDate.now(), user1, ticket2);
+        Comment comment23 = new Comment(null, "Ticket2: Comment desc 23", LocalDate.now(), user2, ticket2);
+        Comment comment24 = new Comment(null, "Ticket3: Comment desc 24", LocalDate.now(), user3, ticket3);
+        Comment comment25 = new Comment(null, "Ticket4: Comment desc 25", LocalDate.now(), user3, ticket4);
 
         userRepository.save(user1);
         userRepository.save(user2);
