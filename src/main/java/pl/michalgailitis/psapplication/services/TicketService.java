@@ -3,7 +3,9 @@ package pl.michalgailitis.psapplication.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
+import pl.michalgailitis.psapplication.repository.CommentRepository;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
+    private final CommentService commentService;
 
     public List<Ticket> getAllTickets(){
         return ticketRepository.findAll();
@@ -24,6 +27,7 @@ public class TicketService {
                 .orElseThrow(() -> new Exception(String.format("There is no ticked with %d", id)));
     }
 
+
     public Ticket createTicket(final Ticket ticket) {
         return ticketRepository.save(ticket);
     }
@@ -32,5 +36,24 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
+
+    public List<Comment> getComments(Long id) throws Exception {
+        return ticketRepository.findById(id).orElseThrow().getComments();
+
+    }
+
+    public boolean createComment (final Long id, final Comment newComment){
+        return ticketRepository.findById(id).orElseThrow().getComments().add(newComment);
+    }
+
+    public void deleteComment(final Long ticketId, final Long commentId){
+//        ticketRepository.findById(ticketId).orElseThrow().getComments().stream().forEach(p -> System.out.println(p.getId()));
+//        System.out.println(ticketRepository.findById(ticketId).orElseThrow().getComments().remove(commentId));
+//        ticketRepository.findById(ticketId).orElseThrow().getComments().stream().forEach(p -> System.out.println(p.getId()));
+//         System.out.println(ticketRepository.findById(ticketId).orElseThrow().getComments().remove(commentId));
+
+        commentService.deleteComment(commentId);
+
+    }
 
 }

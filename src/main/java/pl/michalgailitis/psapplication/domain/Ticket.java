@@ -53,7 +53,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
