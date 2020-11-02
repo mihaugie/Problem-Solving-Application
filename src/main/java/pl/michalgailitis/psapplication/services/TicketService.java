@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
+import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 
@@ -18,6 +19,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final CommentService commentService;
 
+
     public List<Ticket> getAllTickets(){
         return ticketRepository.findAll();
     }
@@ -27,7 +29,18 @@ public class TicketService {
                 .orElseThrow(() -> new Exception(String.format("There is no ticked with %d", id)));
     }
 
+    public List<Ticket> getTicketByAuthorOrResponsible(final User author, final User responsible) {
+        return ticketRepository.findTicketsByAuthorOrResponsible(author, responsible);
+    }
 
+    public List<Ticket> getTicketByAuthor(final User authorId) {
+        return ticketRepository.getAllByAuthor(authorId);
+    }
+
+    public List<Ticket> getTicketByTitle(final String title){
+        return ticketRepository.findTicketsByTitle(title);
+
+    }
     public Ticket createTicket(final Ticket ticket) {
         return ticketRepository.save(ticket);
     }

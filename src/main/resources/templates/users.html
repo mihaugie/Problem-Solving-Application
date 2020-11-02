@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<h1>Users:</h1>
+<div th:each="user : ${users}">
+    <p th:text="'Email: ' + ${user.getEmail()}"></p>
+    <p th:text="'Password: ' + ${user.getPassword()}"></p>
+</div>
+
+<table>
+    <tr>
+        <th>USER</th>
+        <th>PASSWORD</th>
+        <th>ROLE</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getPassword()}"></td>
+        <td th:text="${user.getRole()}"></td>
+    </tr>
+</table>
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+
+<!--<div>-->
+<!--    <form th:action="@{/users/create}" method="post" th:object="${userForm}">-->
+
+<!--        <label for="email">Email: </label>-->
+<!--        <input id="email" type="text" th:field="*{email}">-->
+<!--        <p th:if="${#fields.hasErrors('email')}"-->
+<!--           th:text="${#fields.errors('email')}"></p>-->
+
+<!--        <label for="password">Password: </label>-->
+<!--        <input id="password" type="password" th:field="*{password}">-->
+
+<!--        <label for="confirmPassword">Confirm Password: </label>-->
+<!--        <input id="confirmPassword" type="password" th:field="*{confirmPassword}">-->
+
+<!--        <button type="submit">CREATE USER</button>-->
+
+<!--    </form>-->
+
+<!--</div>-->
+
+</body>
+</html>
