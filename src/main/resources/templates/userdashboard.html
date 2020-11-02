@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+</head>
+<body>
+<header>USER DASHBOARD</header>
+<p th:text="'WITAJ: ' + ${username}"></p>
+<p></p>
+<table>
+    <tr>
+        <th>USER</th>
+    </tr>
+    <tr th:each="ticket : ${tickets}">
+        <td th:text="${ticket.getAuthor().getEmail()}"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>USER</th>
+    </tr>
+    <tr th:each="ticket : ${ticketsbytitle}">
+        <td th:text="${ticket.getAuthor().getEmail()}"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>USER</th>
+    </tr>
+    <tr th:each="ticket : ${byauthor}">
+        <td th:text="${ticket.getAuthor().getEmail()}"></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>USER</th>
+        <th>USER</th>
+    </tr>
+    <tr th:each="ticket : ${usertickets}">
+        <td th:text="${ticket.getDescription()}"></td>
+        <td th:text="${ticket.getAuthor().getEmail()}"></td>
+    </tr>
+</table>
+<!--<table>-->
+<!--    <tr>-->
+<!--        <th>USER</th>-->
+<!--        <th>PASSWORD</th>-->
+<!--        <th>ROLE</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="ticket : ${usertickets}">-->
+<!--        <td th:text="${ticket.getDescription()}"></td>-->
+<!--        <td th:text="${ticket.getAuthor()}"></td>-->
+<!--        <td th:text="${ticket.getCreatedOn()}"></td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+</html>

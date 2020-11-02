@@ -57,6 +57,11 @@ public class Ticket {
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-
+    public User getAuthor() {
+        return author;
+    }
 }

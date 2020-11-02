@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
-public class TicketController {
+public class TicketRestController {
 
     private final TicketService ticketService;
 
