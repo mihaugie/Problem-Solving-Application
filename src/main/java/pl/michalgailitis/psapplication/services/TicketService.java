@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
+import pl.michalgailitis.psapplication.domain.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
@@ -29,8 +30,8 @@ public class TicketService {
                 .orElseThrow(() -> new Exception(String.format("There is no ticked with %d", id)));
     }
 
-    public List<Ticket> getTicketByAuthorOrResponsible(final User author, final User responsible) {
-        return ticketRepository.findTicketsByAuthorOrResponsible(author, responsible);
+    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
+        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
     }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {

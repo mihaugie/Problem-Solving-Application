@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header>TICKET DETAILS:</header>
+<p th:text="'ID: ' + ${selectedticket.getId()}"></p>
+<p th:text="'TITLE: ' + ${selectedticket.getTitle()}"></p>
+<p th:text="'DESCRIPTION: ' + ${selectedticket.getDescription()}"></p>
+<p th:text="'STATUS: ' + ${selectedticket.getStatus()}"></p>
+<p th:text="'TICKET TYPE: ' + ${selectedticket.getTicketType()}"></p>
+<p th:text="'AUTHOR: ' + ${selectedticket.getAuthor().getUserNameAndSurename()}"></p>
+<p th:text="'RESPONSIBLE: ' + ${selectedticket.getResponsible().getUserNameAndSurename()}"></p>
+<p th:text="'CREATED ON: ' + ${selectedticket.getCreatedOn()}"></p>
+<p th:text="'PROPOSED SOLUTION : ' + ${selectedticket.getProposedSolution()}"></p>
+
+<p>COMMENTS:</p>
+<p th:each="comment : ${selectedticket.getComments()}">
+    <a2 th:text="'COMMENT ID: ' + ${comment.getId()}"></a2>
+    <a2 th:text="'COMMENT CREATED ON: ' + ${comment.getCreatedOn()}"></a2>
+    <a2 th:text="'COMMENT CREATED BY: ' + ${comment.getAuthor().getUserNameAndSurename()}"></a2>
+    <a2 th:text="'DESCRIPTION: ' + ${comment.getCommentDesc()}"></a2>
+
+</p>
+
+
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+</html>

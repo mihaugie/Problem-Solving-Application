@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.michalgailitis.psapplication.domain.Role;
+import pl.michalgailitis.psapplication.domain.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.services.TicketService;
@@ -23,27 +24,29 @@ public class UserDashboardController {
     private final TicketService ticketService;
     private final UserService userService;
 
+    private final Status USERDASHBOARDSTATUS = Status.OPEN;
+
     @GetMapping
     public String userDashboard(final ModelMap modelMap) throws Exception {
+
+
         String currentUserName = userInfoService.getCurrentUserName();
         User currentUser = userService.getUserById(currentUserName);
 
-        modelMap.addAttribute("username", currentUserName);
-
-
-        modelMap.addAttribute("tickets", ticketService.getAllTickets());
-        modelMap.addAttribute("ticketsbytitle", ticketService.getTicketByTitle("Ticket title 1"));
-
+        modelMap.addAttribute("username", currentUser);
 
         List<Ticket> ticketByAuthor = ticketService.getTicketByAuthor(currentUser);
         modelMap.addAttribute("byauthor", ticketByAuthor);
 
-        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsible(currentUser, currentUser);
+        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsibleAndStatus(currentUser, currentUser, USERDASHBOARDSTATUS);
         modelMap.addAttribute("usertickets", ticketByAuthorOrResponsible);
+
+        int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
+        modelMap.addAttribute("noofopentickets", noOfOpenTicketsForLoggedUser);
 
         return "userdashboard";
 
     }
 
-
+//DODANIE LICZBY OTWARTYCH ITEMOW
 }

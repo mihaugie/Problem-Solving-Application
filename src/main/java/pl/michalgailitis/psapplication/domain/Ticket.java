@@ -57,11 +57,18 @@ public class Ticket {
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public User getAuthor() {
-        return author;
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", proposedSolution='" + proposedSolution + '\'' +
+                ", ticketType=" + ticketType +
+                ", createdOn=" + createdOn +
+                ", author=" + author +
+                ", responsible=" + responsible +
+                ", status=" + status +
+                '}';
     }
 }
