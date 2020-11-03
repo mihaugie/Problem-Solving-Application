@@ -47,4 +47,13 @@ public class User {
     @JsonIgnore
     private List<Ticket> tickets_as_responsible;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", userNameAndSurename='" + userNameAndSurename + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

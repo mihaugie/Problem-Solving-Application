@@ -9,7 +9,6 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component

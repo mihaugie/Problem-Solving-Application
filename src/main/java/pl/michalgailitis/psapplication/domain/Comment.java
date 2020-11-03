@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "comments")
@@ -36,6 +35,33 @@ public class Comment {
     @JsonIgnore
     private Ticket ticket;
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getCommentDesc() {
+        return commentDesc;
+    }
 
+    public LocalDate getCreatedOn() {
+        return createdOn;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", commentDesc='" + commentDesc + '\'' +
+                ", createdOn=" + createdOn +
+                ", author=" + author +
+                '}';
+    }
 }
