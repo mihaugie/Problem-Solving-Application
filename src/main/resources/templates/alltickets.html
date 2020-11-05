@@ -2,24 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Dashboard</title>
+    <title>Title</title>
 </head>
 <body>
-
-<p>
-    <a href="../newticket.html" th:href="@{/tickets}">CREATE NEW TICKET</a>
-</p>
-<p>
-    <a href="../alltickets.html" th:href="@{/tickets/all}">VIEW ALL TICKETS</a>
-</p>
-
-<h1>USER DASHBOARD</h1>
-<p th:text="'WELCOME: ' + ${username.getNameSurename()}"></p>
-<p></p>
-
-<p th:text="'You have currently ' + ${noofopentickets} + ' open tickets.'"></p>
-
-<p>Here are your open tickets:</p>
+<h1>ALL TICKETS</h1>
 
 <table>
     <tr>
@@ -32,7 +18,7 @@
         <th>TICKET TYPE</th>
         <th>EDIT</th>
     </tr>
-    <tr th:each="ticket : ${usertickets}">
+    <tr th:each="ticket : ${tickets}">
         <td th:text="${ticket.getId()}"></td>
         <td th:text="${ticket.getTitle()}"></td>
         <td th:text="${ticket.getDescription()}"></td>
@@ -45,11 +31,6 @@
         </td>
     </tr>
 </table>
-
-
-<p>
-    <a href="../home.html" th:href="@{/}">Return to home</a>
-</p>
 
 </body>
 </html>

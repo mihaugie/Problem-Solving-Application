@@ -5,4 +5,5 @@ import pl.michalgailitis.psapplication.domain.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
+    User findUserByNameSurename(String userNameSurename);
 }

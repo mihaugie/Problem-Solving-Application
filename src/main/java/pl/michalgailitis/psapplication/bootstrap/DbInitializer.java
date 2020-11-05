@@ -22,8 +22,8 @@ public class DbInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user1 = new User("user@email.com", "dupa", "Michał Gailitis", Role.USER, List.of(), List.of());
-        User user2 = new User("user2@email.com", "cycki", "Adam Małysz", Role.ADMIN, List.of(), List.of());
+        User user1 = new User("user@email.com", "dupa", "Michal Gailitis", Role.USER, List.of(), List.of());
+        User user2 = new User("user2@email.com", "cycki", "Adam Malysz", Role.ADMIN, List.of(), List.of());
         User user3 = new User("user3@email.com", "tola", "Iza Bela", Role.USER, List.of(), List.of());
 
         final Ticket ticket1 = new Ticket(null, "Ticket title 1", "Desc 1", "Solution 1", TicketType.BUG, LocalDate.now(), user2, user1, Status.OPEN, List.of());

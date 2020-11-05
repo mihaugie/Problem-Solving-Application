@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -28,8 +29,8 @@ public class User {
 
 
     @NotNull
-    @Column(name = "user_name_and_surename")
-    private String userNameAndSurename;
+    @Column(name = "name_surename")
+    private String nameSurename;
 
 
     @NotNull
@@ -52,7 +53,7 @@ public class User {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", userNameAndSurename='" + userNameAndSurename + '\'' +
+                ", userNameSurename='" + nameSurename + '\'' +
                 ", role=" + role +
                 '}';
     }
