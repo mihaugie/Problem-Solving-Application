@@ -27,11 +27,15 @@ public class UserService {
 
     public User getUserById(String email) throws Exception {
         return userRepository.findById(email)
-                .orElseThrow(() -> new Exception(String.format("Shop with id %s does not exist", email)));
+                .orElseThrow(() -> new Exception(String.format("User with id %s does not exist", email)));
     }
 
     public void deleteUser(final String email){
         userRepository.deleteById(email);
+    }
+
+    public User findByNameAndSurename( final String userNameSurename){
+        return userRepository.findUserByNameSurename(userNameSurename);
     }
 
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>CREATE NEW TICKET</h1>
+
+<form th:action="@{/tickets/addticket}" method="post" th:object="${ticket}">
+
+    <div class="p-3 p-lg-5 border">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="c_name" class="text-black">Title<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_name" th:field="*{title}">
+            </div>
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">Description<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_price" th:field="*{description}">
+            </div>
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">Proposed Solution<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_price" th:field="*{proposedSolution}">
+            </div>
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">DROPDOWN TicketType<span class="text-danger">*</span></label>
+                <select th:field="*{ticketType}">
+                    <option th:each="ticketType : ${tickettypes}" th:text="${ticketType}" th:value="${ticketType}"></option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">DROPDOWN Responsible<span class="text-danger">*</span></label>
+                <select th:field="*{responsible}">
+                    <option th:each="user : ${users}" th:text="${user.getNameSurename()}" th:value="${user.getEmail()}"></option>
+                </select>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Dodaj produkt">
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

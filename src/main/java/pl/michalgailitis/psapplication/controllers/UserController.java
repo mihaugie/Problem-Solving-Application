@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.michalgailitis.psapplication.domain.User;
-import pl.michalgailitis.psapplication.services.UserService;
+ import pl.michalgailitis.psapplication.services.UserService;
 
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

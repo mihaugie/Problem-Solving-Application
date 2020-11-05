@@ -15,6 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2/**").permitAll()
                 .and()
                 .formLogin()
+//                .loginPage("/login")//.defaultSuccessUrl("/index", true).failureUrl("/login")
+//                .and()
+//                .logout().logoutUrl("/logout").logoutSuccessUrl("/logoutView")
+//                .and()
+//                .rememberMe().key("nazwa-ciasteczka").tokenValiditySeconds(10)  //CW 7 - ZAPAMIĘTYWANIE ZALOGOWANEGO UZYTKOWNIKA
                 .and()
                 .httpBasic()
                 .and()

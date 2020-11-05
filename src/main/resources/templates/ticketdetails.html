@@ -5,14 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<header>TICKET DETAILS:</header>
+<h1>TICKET DETAILS:</h1>
 <p th:text="'ID: ' + ${selectedticket.getId()}"></p>
 <p th:text="'TITLE: ' + ${selectedticket.getTitle()}"></p>
 <p th:text="'DESCRIPTION: ' + ${selectedticket.getDescription()}"></p>
 <p th:text="'STATUS: ' + ${selectedticket.getStatus()}"></p>
 <p th:text="'TICKET TYPE: ' + ${selectedticket.getTicketType()}"></p>
-<p th:text="'AUTHOR: ' + ${selectedticket.getAuthor().getUserNameAndSurename()}"></p>
-<p th:text="'RESPONSIBLE: ' + ${selectedticket.getResponsible().getUserNameAndSurename()}"></p>
+<p th:text="'AUTHOR: ' + ${selectedticket.getAuthor().getNameSurename()}"></p>
+<p th:text="'RESPONSIBLE: ' + ${selectedticket.getResponsible().getNameSurename()}"></p>
 <p th:text="'CREATED ON: ' + ${selectedticket.getCreatedOn()}"></p>
 <p th:text="'PROPOSED SOLUTION : ' + ${selectedticket.getProposedSolution()}"></p>
 
@@ -20,10 +20,15 @@
 <p th:each="comment : ${selectedticket.getComments()}">
     <a2 th:text="'COMMENT ID: ' + ${comment.getId()}"></a2>
     <a2 th:text="'COMMENT CREATED ON: ' + ${comment.getCreatedOn()}"></a2>
-    <a2 th:text="'COMMENT CREATED BY: ' + ${comment.getAuthor().getUserNameAndSurename()}"></a2>
+    <a2 th:text="'COMMENT CREATED BY: ' + ${comment.getAuthor().getNameSurename()}"></a2>
     <a2 th:text="'DESCRIPTION: ' + ${comment.getCommentDesc()}"></a2>
 
 </p>
+<!--<div class="col-md-6">-->
+<!--    <label for="c_name" class="text-black">Add Comment:<span class="text-danger">*</span></label>-->
+<!--    <input type="text" class="form-control" id="c_name" th:field="*{selectedticket.getComments().add()}">-->
+<!--</div>-->
+<!--<button href="../home.html" th:href="@{/}">CLOSE TICKET</button>-->
 
 
 
