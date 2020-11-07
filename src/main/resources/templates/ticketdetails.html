@@ -9,6 +9,7 @@
 <p th:text="'ID: ' + ${selectedticket.getId()}"></p>
 <p th:text="'TITLE: ' + ${selectedticket.getTitle()}"></p>
 <p th:text="'DESCRIPTION: ' + ${selectedticket.getDescription()}"></p>
+<p th:text="'PROPOSED SOLUTION: ' + ${selectedticket.getProposedSolution()}"></p>
 <p th:text="'STATUS: ' + ${selectedticket.getStatus()}"></p>
 <p th:text="'TICKET TYPE: ' + ${selectedticket.getTicketType()}"></p>
 <p th:text="'AUTHOR: ' + ${selectedticket.getAuthor().getNameSurename()}"></p>
@@ -16,22 +17,57 @@
 <p th:text="'CREATED ON: ' + ${selectedticket.getCreatedOn()}"></p>
 <p th:text="'PROPOSED SOLUTION : ' + ${selectedticket.getProposedSolution()}"></p>
 
+<hr>
+
 <p>COMMENTS:</p>
-<p th:each="comment : ${selectedticket.getComments()}">
-    <a2 th:text="'COMMENT ID: ' + ${comment.getId()}"></a2>
-    <a2 th:text="'COMMENT CREATED ON: ' + ${comment.getCreatedOn()}"></a2>
-    <a2 th:text="'COMMENT CREATED BY: ' + ${comment.getAuthor().getNameSurename()}"></a2>
-    <a2 th:text="'DESCRIPTION: ' + ${comment.getCommentDesc()}"></a2>
 
-</p>
-<!--<div class="col-md-6">-->
-<!--    <label for="c_name" class="text-black">Add Comment:<span class="text-danger">*</span></label>-->
-<!--    <input type="text" class="form-control" id="c_name" th:field="*{selectedticket.getComments().add()}">-->
-<!--</div>-->
-<!--<button href="../home.html" th:href="@{/}">CLOSE TICKET</button>-->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>CREATED ON</th>
+            <th>AUTHOR</th>
+            <th>COMMENT</th>
+        </tr>
 
 
+<tr th:each="comment : ${selectedticket.getComments()}">
+    <td th:text="${comment.getId()}"></td>
+    <td th:text=" ${comment.getCreatedOn()}"></td>
+    <td th:text="${comment.getAuthor().getNameSurename()}"></td>
+    <td th:text="${comment.getComment_desc()}"></td>
 
+</tr>
+</table>
+
+<form th:action="@{/tickets/{id}/comment/new (id=${selectedticket.getId()})}" method="post" th:object="${comment}">
+
+    <div class="p-3 p-lg-5 border">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">New Comment<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_price" th:field="*{comment_desc}">
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Add Comment">
+            </div>
+        </div>
+    </div>
+</form>
+
+<br>
+<br>
+<br>
+
+<form th:action="@{/tickets/{id}/close (id=${selectedticket.getId()})}" method="post">
+    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">
+
+</form>
+
+<hr>
 <p>
     <a href="../home.html" th:href="@{/}">Return to home</a>
 </p>

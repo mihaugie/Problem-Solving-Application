@@ -29,7 +29,7 @@ public class DbInitializer implements CommandLineRunner {
         final Ticket ticket1 = new Ticket(null, "Ticket title 1", "Desc 1", "Solution 1", TicketType.BUG, LocalDate.now(), user2, user1, Status.OPEN, List.of());
         final Ticket ticket2 = new Ticket(null, "Ticket title 2", "Desc 2", "Solution 2", TicketType.IDEA, LocalDate.now(), user2, user2, Status.OPEN, List.of());
         final Ticket ticket3 = new Ticket(null, "Ticket title 3", "Desc 3", "Solution 3", TicketType.PROBLEM, LocalDate.now(), user2, user1, Status.CLOSED, List.of());
-        final Ticket ticket4 = new Ticket(null, "Ticket title 4", "Desc 4", "Solution 4", TicketType.TODO, LocalDate.now(), user1, user2, Status.OPEN, List.of());
+        final Ticket ticket4 = new Ticket(null, "Ticket title 4", "Desc 4", "Solution 4", TicketType.TODO, LocalDate.now(), user1, user2, Status.CLOSED, List.of());
         Comment comment1 = new Comment(null, "Comment desc 1", LocalDate.now(), user1, ticket1);
         Comment comment21 = new Comment(null, "Ticket2: Comment desc 21", LocalDate.now(), user1, ticket2);
         Comment comment22 = new Comment(null, "Ticket2: Comment desc 22", LocalDate.now(), user1, ticket2);

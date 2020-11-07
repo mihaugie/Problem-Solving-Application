@@ -12,7 +12,9 @@
 <p>
     <a href="../alltickets.html" th:href="@{/tickets/all}">VIEW ALL TICKETS</a>
 </p>
-
+<br>
+<hr>
+<br>
 <h1>USER DASHBOARD</h1>
 <p th:text="'WELCOME: ' + ${username.getNameSurename()}"></p>
 <p></p>
@@ -26,6 +28,7 @@
         <th>ID</th>
         <th>TITLE</th>
         <th>DESC</th>
+        <th>PROPOSED SOLUTION</th>
         <th>AUTHOR</th>
         <th>RESPONSIBLE</th>
         <th>STATUS</th>
@@ -36,20 +39,22 @@
         <td th:text="${ticket.getId()}"></td>
         <td th:text="${ticket.getTitle()}"></td>
         <td th:text="${ticket.getDescription()}"></td>
+        <td th:text="${ticket.getProposedSolution()}"></td>
         <td th:text="${ticket.getAuthor().getEmail()}"></td>
         <td th:text="${ticket.getResponsible().getEmail()}"></td>
         <td th:text="${ticket.getStatus()}"></td>
         <td th:text="${ticket.getTicketType()}"></td>
         <td>
-            <a th:href="@{/tickets/{id} (id=${ticket.getId()})}" type="button">VIEW DETAILS</a>
+            <a th:href="@{/tickets/{id} (id=${ticket.getId()})}" th:object="${comment}" type="button">VIEW DETAILS</a>
         </td>
     </tr>
 </table>
 
+<hr>
+<hr>
+<hr>
 
-<p>
-    <a href="../home.html" th:href="@{/}">Return to home</a>
-</p>
+
 
 </body>
 </html>
