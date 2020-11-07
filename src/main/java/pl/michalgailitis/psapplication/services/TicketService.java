@@ -11,6 +11,7 @@ import pl.michalgailitis.psapplication.repository.CommentRepository;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
 
     public List<Ticket> getAllTickets(){
@@ -56,8 +58,11 @@ public class TicketService {
 
     }
 
-    public boolean createComment (final Long id, final Comment newComment){
-        return ticketRepository.findById(id).orElseThrow().getComments().add(newComment);
+    public Ticket createComment (final Long id, final Comment newComment){
+        Optional<Ticket> ticketToAddComment = ticketRepository.findById(id);
+        ticketToAddComment.orElseThrow().getComments().add(newComment);
+        Ticket ticket = ticketToAddComment.get();
+        return ticketRepository.save(ticket);
     }
 
     public void deleteComment(final Long ticketId, final Long commentId){
@@ -68,6 +73,10 @@ public class TicketService {
 
         commentService.deleteComment(commentId);
 
+    }
+
+    public Ticket closeTicket(final Ticket ticket){
+        return ticketRepository.save(ticket);
     }
 
 }

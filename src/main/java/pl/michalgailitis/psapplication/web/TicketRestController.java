@@ -44,7 +44,7 @@ public class TicketRestController {
 
     @PutMapping("/{id}/comments")
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean addComment(@PathVariable(name = "id") Long id, @RequestBody Comment newComment){
+    public Ticket addComment(@PathVariable(name = "id") Long id, @RequestBody Comment newComment){
 
         return ticketService.createComment(id, newComment);
     }

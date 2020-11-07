@@ -48,5 +48,4 @@ public class UserDashboardController {
 
     }
 
-//DODANIE LICZBY OTWARTYCH ITEMOW
 }

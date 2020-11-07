@@ -21,11 +21,11 @@ public class Comment {
 
     @NotNull
     @Column(name = "comment_desc")
-    private String commentDesc;
+    private String comment_desc;
 
     @NotNull
     @Column(name = "created_on")
-    private LocalDate createdOn;
+    private LocalDate created_on;
 
     @NotNull
     @ManyToOne
@@ -39,12 +39,12 @@ public class Comment {
         return id;
     }
 
-    public String getCommentDesc() {
-        return commentDesc;
+    public String getComment_desc() {
+        return comment_desc;
     }
 
     public LocalDate getCreatedOn() {
-        return createdOn;
+        return created_on;
     }
 
     public User getAuthor() {
@@ -55,13 +55,31 @@ public class Comment {
         return ticket;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setComment_desc(String comment_desc) {
+        this.comment_desc = comment_desc;
+    }
+
+    public void setCreated_on(LocalDate created_on) {
+        this.created_on = created_on;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", commentDesc='" + commentDesc + '\'' +
-                ", createdOn=" + createdOn +
+                ", commentDesc='" + comment_desc + '\'' +
+                ", createdOn=" + created_on +
                 ", author=" + author +
                 '}';
     }
+
+
 }
