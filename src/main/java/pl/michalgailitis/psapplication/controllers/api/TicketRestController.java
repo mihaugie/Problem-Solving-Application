@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.web;
+package pl.michalgailitis.psapplication.controllers.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

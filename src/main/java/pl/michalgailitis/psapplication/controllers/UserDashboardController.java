@@ -24,11 +24,15 @@ public class UserDashboardController {
     private final TicketService ticketService;
     private final UserService userService;
 
-    private final Status USERDASHBOARDSTATUS = Status.OPEN;
+    //MB stałe wyrzucić do AppConsts w ramach pakietu - klasa finalna z polami statycznymi
+    //LUB
+    //Interfejs bo nie trzeba pisać public static final
+    private static final Status USERDASHBOARDSTATUS = Status.OPEN;
 
     @GetMapping
     public String userDashboard(final ModelMap modelMap) throws Exception {
 
+//MB zrobić tak metody zeby modelMap tylko raz przekazywał dane
 
         String currentUserName = userInfoService.getCurrentUserName();
         User currentUser = userService.getUserById(currentUserName);

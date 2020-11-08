@@ -2,6 +2,7 @@ package pl.michalgailitis.psapplication.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -13,6 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/h2/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
 //                .loginPage("/login")//.defaultSuccessUrl("/index", true).failureUrl("/login")
@@ -31,5 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //MB logowanie przez uzytkownikow - nadpisac configure
 
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("asd").password().roles();
+//    }
 }

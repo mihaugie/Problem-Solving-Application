@@ -57,6 +57,18 @@ public class Ticket {
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
+    public Ticket(@NotNull String title, @NotNull String description, @NotNull String proposedSolution, @NotNull TicketType ticketType, @NotNull LocalDate createdOn, @NotNull User author, @NotNull User responsible, @NotNull Status status, List<Comment> comments) {
+        this.title = title;
+        this.description = description;
+        this.proposedSolution = proposedSolution;
+        this.ticketType = ticketType;
+        this.createdOn = createdOn;
+        this.author = author;
+        this.responsible = responsible;
+        this.status = status;
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +

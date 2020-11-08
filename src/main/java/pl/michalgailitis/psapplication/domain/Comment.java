@@ -71,6 +71,13 @@ public class Comment {
         this.author = author;
     }
 
+    public Comment(@NotNull String comment_desc, @NotNull LocalDate created_on, @NotNull User author, Ticket ticket) {
+        this.comment_desc = comment_desc;
+        this.created_on = created_on;
+        this.author = author;
+        this.ticket = ticket;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
