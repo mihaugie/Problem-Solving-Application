@@ -3,6 +3,7 @@ package pl.michalgailitis.psapplication.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,15 +37,17 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
-    @NotNull
+    //MB zamienic na adnotacje
+    //@NotNull
     @Column(name = "created_on")
+    @CreationTimestamp
     private LocalDate createdOn;
 
-    @NotNull
+    //@NotNull
     @ManyToOne
     private User author;
 
-    @NotNull
+    //@NotNull
     @ManyToOne
     private User responsible;
 

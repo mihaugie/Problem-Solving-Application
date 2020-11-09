@@ -14,6 +14,7 @@ import pl.michalgailitis.psapplication.services.UserInfoService;
 import pl.michalgailitis.psapplication.services.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -42,8 +43,11 @@ public class UserDashboardController {
         List<Ticket> ticketByAuthor = ticketService.getTicketByAuthor(currentUser);
         modelMap.addAttribute("byauthor", ticketByAuthor);
 
-        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsibleAndStatus(currentUser, currentUser, USERDASHBOARDSTATUS);
+        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(USERDASHBOARDSTATUS, currentUser.getEmail());
         modelMap.addAttribute("usertickets", ticketByAuthorOrResponsible);
+
+//        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsibleAndStatus(currentUser, currentUser, USERDASHBOARDSTATUS);
+//        modelMap.addAttribute("usertickets", ticketByAuthorOrResponsible);
 
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
         modelMap.addAttribute("noofopentickets", noOfOpenTicketsForLoggedUser);

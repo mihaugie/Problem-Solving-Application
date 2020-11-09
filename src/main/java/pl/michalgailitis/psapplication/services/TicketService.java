@@ -12,6 +12,7 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -33,9 +34,13 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
-    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
-        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+        return ticketRepository.find(status, email);
     }
+//
+//    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
+//        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
+//    }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
         return ticketRepository.getAllByAuthor(authorId);

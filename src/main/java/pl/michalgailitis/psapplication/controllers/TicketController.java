@@ -59,7 +59,7 @@ public class TicketController {
     @PostMapping("/addticket")
     //@ResponseStatus(HttpStatus.CREATED)
     public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) throws Exception {
-        ticket.setCreatedOn(LocalDate.now());
+        //ticket.setCreatedOn(LocalDate.now());
         ticket.setStatus(Status.OPEN);
         ticket.setAuthor(userService.getUserById(userInfoService.getCurrentUserName()));
         ticket.setResponsible(userService.getUserById(ticket.getResponsible().getEmail()));

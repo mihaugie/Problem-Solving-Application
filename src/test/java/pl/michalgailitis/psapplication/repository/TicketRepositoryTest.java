@@ -3,6 +3,7 @@ package pl.michalgailitis.psapplication.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import pl.michalgailitis.psapplication.domain.*;
 
 import java.time.LocalDate;
@@ -25,14 +26,17 @@ class TicketRepositoryTest {
     void shouldFindOpenTicketByAuthorOrResponsible(){
 
         User user = new User("email@gmail.com", "aaa", "AdamB", Role.USER, new ArrayList<>(), new ArrayList<>());
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-        Ticket ticket = new Ticket("title", "des", "solu", TicketType.BUG, null, user, null, Status.OPEN, new ArrayList<>());
+        Ticket ticket = new Ticket("title", "des", "solu", TicketType.BUG, null, savedUser, null, Status.OPEN, new ArrayList<>());
         ticketRepository.save(ticket);
 
         Set<Ticket> tickets = ticketRepository.find(Status.OPEN, "email@gmail.com");
 
         assertThat(tickets).hasSize(1);
+
+        //MB: sortowanie
+        ticketRepository.findAll(Sort.by("proposedSolution").ascending());
     }
 
 
