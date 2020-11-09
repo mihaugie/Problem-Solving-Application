@@ -41,12 +41,12 @@ public class User {
     @OneToMany
     @JoinColumn(name="author_email")
     @JsonIgnore
-    private List<Ticket> tickets_as_author;
+    private List<Ticket> ticketsAsAuthor;
 
     @OneToMany
     @JoinColumn(name="responsible_email")
     @JsonIgnore
-    private List<Ticket> tickets_as_responsible;
+    private List<Ticket> ticketsAsResponsible;
 
     @Override
     public String toString() {
