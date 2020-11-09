@@ -14,10 +14,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
+    public User createUser (final User providedUser){
+        final User user = userMapper.toUser(providedUser);
 
-
-    public User createUser (final User user){
         return userRepository.save(user);
     }
 

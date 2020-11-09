@@ -2,6 +2,7 @@ package pl.michalgailitis.psapplication.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.michalgailitis.psapplication.domain.*;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
@@ -19,6 +20,9 @@ public class DbInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final TicketRepository ticketRepository;
+    private final PasswordEncoder passwordEncoder;
+
+
 
 
     //MB wyrzucić stringi do stałych
@@ -26,6 +30,14 @@ public class DbInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+
+        String pass1 = passwordEncoder.encode("pass1");
+        String pass2 = passwordEncoder.encode("pass2");
+        String pass3 = passwordEncoder.encode("pass3");
+        System.out.println(pass1);
+        System.out.println(pass2);
+        System.out.println(pass3);
 
         //TAK MA BYC
         User user1 = createUser(TestConsts.EMAIL_1, TestConsts.PASSWORD_1, TestConsts.NAME_SURENAME_1, TestConsts.USER_ROLE);

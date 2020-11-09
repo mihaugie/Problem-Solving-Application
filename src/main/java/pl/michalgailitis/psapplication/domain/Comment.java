@@ -2,13 +2,12 @@ package pl.michalgailitis.psapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,11 +20,11 @@ public class Comment {
 
     @NotNull
     @Column(name = "comment_desc")
-    private String comment_desc;
+    private String commentDesc;
 
-    @NotNull
     @Column(name = "created_on")
-    private LocalDate created_on;
+    @CreationTimestamp
+    private LocalDate createdOn;
 
     @NotNull
     @ManyToOne
@@ -39,12 +38,12 @@ public class Comment {
         return id;
     }
 
-    public String getComment_desc() {
-        return comment_desc;
+    public String getCommentDesc() {
+        return commentDesc;
     }
 
     public LocalDate getCreatedOn() {
-        return created_on;
+        return createdOn;
     }
 
     public User getAuthor() {
@@ -59,21 +58,21 @@ public class Comment {
         this.id = id;
     }
 
-    public void setComment_desc(String comment_desc) {
-        this.comment_desc = comment_desc;
+    public void setCommentDesc(String commentDesc) {
+        this.commentDesc = commentDesc;
     }
 
-    public void setCreated_on(LocalDate created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
     }
 
     public void setAuthor(User author) {
         this.author = author;
     }
 
-    public Comment(@NotNull String comment_desc, @NotNull LocalDate created_on, @NotNull User author, Ticket ticket) {
-        this.comment_desc = comment_desc;
-        this.created_on = created_on;
+    public Comment(@NotNull String commentDesc, @NotNull LocalDate createdOn, @NotNull User author, Ticket ticket) {
+        this.commentDesc = commentDesc;
+        this.createdOn = createdOn;
         this.author = author;
         this.ticket = ticket;
     }
@@ -82,8 +81,8 @@ public class Comment {
     public String toString() {
         return "Comment{" +
                 "id=" + id +
-                ", commentDesc='" + comment_desc + '\'' +
-                ", createdOn=" + created_on +
+                ", commentDesc='" + commentDesc + '\'' +
+                ", createdOn=" + createdOn +
                 ", author=" + author +
                 '}';
     }

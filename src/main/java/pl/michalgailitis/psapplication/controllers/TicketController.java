@@ -73,7 +73,7 @@ public class TicketController {
     public String addNewCommentForm(@PathVariable Long id, Comment comment) throws Exception {
 
         comment.setAuthor(userService.getUserById(userInfoService.getCurrentUserName()));
-        comment.setCreated_on(LocalDate.now());
+        //comment.setCreatedOn(LocalDate.now());
 
         ticketService.createComment(id, comment);
         return "redirect:/tickets/{id}";

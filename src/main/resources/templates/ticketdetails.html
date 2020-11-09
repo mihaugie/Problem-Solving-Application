@@ -34,7 +34,7 @@
     <td th:text="${comment.getId()}"></td>
     <td th:text=" ${comment.getCreatedOn()}"></td>
     <td th:text="${comment.getAuthor().getNameSurename()}"></td>
-    <td th:text="${comment.getComment_desc()}"></td>
+    <td th:text="${comment.getCommentDesc()}"></td>
 
 </tr>
 </table>
@@ -45,7 +45,7 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <label for="c_price" class="text-black">New Comment<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="c_price" th:field="*{comment_desc}">
+                <input type="text" class="form-control" id="c_price" th:field="*{commentDesc}">
 
             </div>
         </div>

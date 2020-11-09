@@ -6,9 +6,12 @@ public interface TestConsts {
     String EMAIL_1 = "user@email.com";
     String EMAIL_2 = "user2@email.com";
     String EMAIL_3 = "user3@email.com";
-    String PASSWORD_1 = "dupa";
-    String PASSWORD_2 = "cycki";
-    String PASSWORD_3 = "tola";
+    //String PASSWORD_1 = "pass1";
+    String PASSWORD_1 = "$2a$10$veYYY9zkbww0wG1EinjDye5zFBmPdLsIaQyEgzd2A0g6Toxb1HqMS";
+    //String PASSWORD_2 = "pass2";
+    String PASSWORD_2 = "$2a$10$NeSJh2uXF5dVlB7TMlVALu4cEJejExP4Z3YKV1.tk9SgBrTWaULPi";
+    //String PASSWORD_3 = "pass3";
+    String PASSWORD_3 = "$2a$10$Q1HLc.95ZFRo.SQmZHJJFegBO51liMHELmdEKKwrIbY8eEGh0CnlS";
     String NAME_SURENAME_1 = "Michal Gailitis";
     String NAME_SURENAME_2 = "Adam Malysz";
     String NAME_SURENAME_3 = "Iza Bela";
