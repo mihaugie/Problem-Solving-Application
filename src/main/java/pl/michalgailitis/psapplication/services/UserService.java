@@ -25,9 +25,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(String email) throws Exception {
+    public User getUserById(String email) {
         return userRepository.findById(email)
-                .orElseThrow(() -> new Exception(String.format("User with id %s does not exist", email)));
+                .orElseThrow(() -> new RuntimeException(String.format("User with id %s does not exist", email)));
     }
 
     public void deleteUser(final String email){

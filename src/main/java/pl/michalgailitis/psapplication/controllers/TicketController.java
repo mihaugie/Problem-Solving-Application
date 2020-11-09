@@ -1,20 +1,19 @@
 package pl.michalgailitis.psapplication.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
-import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.TicketTypeRepository;
-import pl.michalgailitis.psapplication.services.CommentService;
 import pl.michalgailitis.psapplication.services.TicketService;
 import pl.michalgailitis.psapplication.services.UserInfoService;
 import pl.michalgailitis.psapplication.services.UserService;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 @Controller
@@ -27,6 +26,8 @@ public class TicketController {
     private final UserInfoService userInfoService;
     private final UserService userService;
 
+    //MB Stringi na stałe
+    //MG zamienic repository na serwis
 
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id) throws Exception {
@@ -42,7 +43,7 @@ public class TicketController {
         return "alltickets";
     }
 
-    @GetMapping()
+    @GetMapping
     public String getNewTicketForm(ModelMap modelMap) {
         modelMap.addAttribute("ticket", new Ticket());
         modelMap.addAttribute("tickettypes", ticketTypeRepository.getTicketTypeList());
@@ -50,11 +51,15 @@ public class TicketController {
         return "newticket";
     }
 
+//MB - mapowanie wyrzucić do serwisu - lub do model - klasa TicketForm (Ticket.builder(). ... ) , to samo z User
+    // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
+
+    //MB @Auth Principal zamiast User Info Service
 
     @PostMapping("/addticket")
     //@ResponseStatus(HttpStatus.CREATED)
-    public String addNewTicketForm(Ticket ticket) throws Exception {
-        ticket.setCreatedOn(LocalDate.now());
+    public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) throws Exception {
+        //ticket.setCreatedOn(LocalDate.now());
         ticket.setStatus(Status.OPEN);
         ticket.setAuthor(userService.getUserById(userInfoService.getCurrentUserName()));
         ticket.setResponsible(userService.getUserById(ticket.getResponsible().getEmail()));

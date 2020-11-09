@@ -1,8 +1,7 @@
-package pl.michalgailitis.psapplication.web;
+package pl.michalgailitis.psapplication.controllers.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.services.UserService;

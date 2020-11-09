@@ -14,6 +14,7 @@ import pl.michalgailitis.psapplication.services.UserInfoService;
 import pl.michalgailitis.psapplication.services.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -24,11 +25,15 @@ public class UserDashboardController {
     private final TicketService ticketService;
     private final UserService userService;
 
-    private final Status USERDASHBOARDSTATUS = Status.OPEN;
+    //MB stałe wyrzucić do AppConsts w ramach pakietu - klasa finalna z polami statycznymi
+    //LUB
+    //Interfejs bo nie trzeba pisać public static final
+    private static final Status USERDASHBOARDSTATUS = Status.OPEN;
 
     @GetMapping
     public String userDashboard(final ModelMap modelMap) throws Exception {
 
+//MB zrobić tak metody zeby modelMap tylko raz przekazywał dane
 
         String currentUserName = userInfoService.getCurrentUserName();
         User currentUser = userService.getUserById(currentUserName);
@@ -38,8 +43,11 @@ public class UserDashboardController {
         List<Ticket> ticketByAuthor = ticketService.getTicketByAuthor(currentUser);
         modelMap.addAttribute("byauthor", ticketByAuthor);
 
-        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsibleAndStatus(currentUser, currentUser, USERDASHBOARDSTATUS);
+        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(USERDASHBOARDSTATUS, currentUser.getEmail());
         modelMap.addAttribute("usertickets", ticketByAuthorOrResponsible);
+
+//        List<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketByAuthorOrResponsibleAndStatus(currentUser, currentUser, USERDASHBOARDSTATUS);
+//        modelMap.addAttribute("usertickets", ticketByAuthorOrResponsible);
 
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
         modelMap.addAttribute("noofopentickets", noOfOpenTicketsForLoggedUser);

@@ -15,6 +15,8 @@ public class UserController {
 
     private final UserService userService;
 
+    //MB teksty do stałej
+
     @GetMapping
     public String showUsers(final ModelMap modelMap) {
         modelMap.addAttribute("users", userService.getAllUsers());

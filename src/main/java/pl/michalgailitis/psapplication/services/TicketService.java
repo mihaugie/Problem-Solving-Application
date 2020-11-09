@@ -12,6 +12,7 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,19 +23,24 @@ public class TicketService {
     private final CommentService commentService;
     private final CommentRepository commentRepository;
 
-
+//MB Zamienic exception na RunTimeException
     public List<Ticket> getAllTickets(){
         return ticketRepository.findAll();
     }
 
-    public Ticket getTicketById(Long id) throws Exception {
+    //dodać wyjątki  własnego typu
+    public Ticket getTicketById(Long id) {
         return ticketRepository.findById(id)
-                .orElseThrow(() -> new Exception(String.format("There is no ticked with %d", id)));
+                .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
-    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
-        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+        return ticketRepository.find(status, email);
     }
+//
+//    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
+//        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
+//    }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
         return ticketRepository.getAllByAuthor(authorId);
@@ -53,7 +59,7 @@ public class TicketService {
     }
 
 
-    public List<Comment> getComments(Long id) throws Exception {
+    public List<Comment> getComments(Long id) {
         return ticketRepository.findById(id).orElseThrow().getComments();
 
     }

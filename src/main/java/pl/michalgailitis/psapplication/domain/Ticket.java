@@ -3,6 +3,7 @@ package pl.michalgailitis.psapplication.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,15 +37,17 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
-    @NotNull
+    //MB zamienic na adnotacje
+    //@NotNull
     @Column(name = "created_on")
+    @CreationTimestamp
     private LocalDate createdOn;
 
-    @NotNull
+    //@NotNull
     @ManyToOne
     private User author;
 
-    @NotNull
+    //@NotNull
     @ManyToOne
     private User responsible;
 
@@ -56,6 +59,18 @@ public class Ticket {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
+
+    public Ticket(@NotNull String title, @NotNull String description, @NotNull String proposedSolution, @NotNull TicketType ticketType, @NotNull LocalDate createdOn, @NotNull User author, @NotNull User responsible, @NotNull Status status, List<Comment> comments) {
+        this.title = title;
+        this.description = description;
+        this.proposedSolution = proposedSolution;
+        this.ticketType = ticketType;
+        this.createdOn = createdOn;
+        this.author = author;
+        this.responsible = responsible;
+        this.status = status;
+        this.comments = comments;
+    }
 
     @Override
     public String toString() {
