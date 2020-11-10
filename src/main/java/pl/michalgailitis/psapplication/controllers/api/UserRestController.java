@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.User;
-import pl.michalgailitis.psapplication.services.UserService;
+import pl.michalgailitis.psapplication.services.users.UserService;
 
 import java.util.List;
 

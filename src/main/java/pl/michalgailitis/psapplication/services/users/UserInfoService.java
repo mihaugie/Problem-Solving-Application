@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.services;
+package pl.michalgailitis.psapplication.services.users;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
