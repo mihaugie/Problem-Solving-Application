@@ -3,12 +3,11 @@ package pl.michalgailitis.psapplication.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pl.michalgailitis.psapplication.domain.Status;
+import pl.michalgailitis.psapplication.model.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {

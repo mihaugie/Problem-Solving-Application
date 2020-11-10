@@ -1,10 +1,11 @@
 package pl.michalgailitis.psapplication.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
-import pl.michalgailitis.psapplication.domain.Status;
+import pl.michalgailitis.psapplication.model.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
@@ -23,7 +24,7 @@ public class TicketService {
     private final CommentService commentService;
     private final CommentRepository commentRepository;
 
-//MB Zamienic exception na RunTimeException
+//DONE: MB Zamienic exception na RunTimeException
     public List<Ticket> getAllTickets(){
         return ticketRepository.findAll();
     }
@@ -84,5 +85,8 @@ public class TicketService {
     public Ticket closeTicket(final Ticket ticket){
         return ticketRepository.save(ticket);
     }
+
+    //MB: sortowanie
+//        ticketRepository.findAll(Sort.by("proposedSolution").ascending());
 
 }

@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.services;
+package pl.michalgailitis.psapplication.services.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

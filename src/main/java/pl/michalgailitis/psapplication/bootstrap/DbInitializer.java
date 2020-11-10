@@ -5,6 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.michalgailitis.psapplication.domain.*;
+import pl.michalgailitis.psapplication.model.Role;
+import pl.michalgailitis.psapplication.model.Status;
+import pl.michalgailitis.psapplication.model.TicketType;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
@@ -12,7 +15,6 @@ import pl.michalgailitis.psapplication.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-//@Profile("dev")
 @Component
 @RequiredArgsConstructor
 public class DbInitializer implements CommandLineRunner {
@@ -21,12 +23,6 @@ public class DbInitializer implements CommandLineRunner {
     private final CommentRepository commentRepository;
     private final TicketRepository ticketRepository;
     private final PasswordEncoder passwordEncoder;
-
-
-
-
-    //MB wyrzucić stringi do stałych
-    //MB przerobić wiersze na metody
 
     @Override
     public void run(String... args) {

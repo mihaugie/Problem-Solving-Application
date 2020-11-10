@@ -12,6 +12,12 @@
 <p>
     <a href="../alltickets.html" th:href="@{/tickets/all}">VIEW ALL TICKETS</a>
 </p>
+<div th:if="${username.getRole().toString().equals('ADMIN')}">
+    <p>
+        <a href="../users.html" th:href="@{/users}">VIEW ALL USERS</a>
+    </p>
+</div>
+
 <br>
 <hr>
 <br>
@@ -52,7 +58,6 @@
 <hr>
 <hr>
 <hr>
-
 
 
 </body>

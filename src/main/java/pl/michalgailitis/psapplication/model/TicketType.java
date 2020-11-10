@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.domain;
+package pl.michalgailitis.psapplication.model;
 
 public enum TicketType {
     PROBLEM,
