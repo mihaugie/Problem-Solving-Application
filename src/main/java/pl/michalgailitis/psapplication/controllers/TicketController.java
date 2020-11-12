@@ -33,6 +33,7 @@ public class TicketController {
         final Ticket selectedTicket = ticketService.getTicketById(id);
         modelMap.addAttribute("selectedticket", selectedTicket);
         modelMap.addAttribute("comment", new Comment());
+        modelMap.addAttribute("currentuser", userService.getUserById(userInfoService.getCurrentUserId()));
         return "ticketdetails";
     }
 
@@ -58,7 +59,7 @@ public class TicketController {
     @PostMapping("/addticket")
     public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) throws Exception {
         ticket.setStatus(Status.OPEN);
-        ticket.setAuthor(userService.getUserById(userInfoService.getCurrentUserName()));
+        ticket.setAuthor(userService.getUserById(userInfoService.getCurrentUserId()));
         ticket.setResponsible(userService.getUserById(ticket.getResponsible().getEmail()));
         ticketService.createTicket(ticket);
         return "redirect:/";
@@ -68,7 +69,7 @@ public class TicketController {
     @PostMapping("/{id}/comment/new")
     public String addNewCommentForm(@PathVariable Long id, Comment comment) throws Exception {
 
-        comment.setAuthor(userService.getUserById(userInfoService.getCurrentUserName()));
+        comment.setAuthor(userService.getUserById(userInfoService.getCurrentUserId()));
 
         ticketService.createComment(id, comment);
         return "redirect:/tickets/{id}";

@@ -35,22 +35,22 @@ public class DbInitializer implements CommandLineRunner {
         System.out.println(pass2);
         System.out.println(pass3);
 
-        //TAK MA BYC
+
         User user1 = createUser(TestConsts.EMAIL_1, TestConsts.PASSWORD_1, TestConsts.NAME_SURENAME_1, TestConsts.USER_ROLE);
         User user2 = createUser(TestConsts.EMAIL_2, TestConsts.PASSWORD_2, TestConsts.NAME_SURENAME_2, TestConsts.ADMIN_ROLE);
         User user3 = createUser(TestConsts.EMAIL_3, TestConsts.PASSWORD_3, TestConsts.NAME_SURENAME_3, TestConsts.USER_ROLE);
 
         Ticket ticket1 = createTicket(TestConsts.TICKET_TITLE_1, TestConsts.TICKET_DESC, TestConsts.TICKET_SOLUTION, TicketType.BUG, LocalDate.now(), user2, user1, Status.OPEN);
         Ticket ticket2 = createTicket(TestConsts.TICKET_TITLE_2, TestConsts.TICKET_DESC,  TestConsts.TICKET_SOLUTION, TicketType.IDEA, LocalDate.now(), user3, user2, Status.OPEN);
-        Ticket ticket3 = createTicket(TestConsts.TICKET_TITLE_3, TestConsts.TICKET_DESC,  TestConsts.TICKET_SOLUTION, TicketType.PROBLEM, LocalDate.now(), user2, user1, Status.CLOSED);
+        Ticket ticket3 = createTicket(TestConsts.TICKET_TITLE_3, TestConsts.TICKET_DESC,  TestConsts.TICKET_SOLUTION, TicketType.PROBLEM, LocalDate.now(), user3, user1, Status.CLOSED);
         Ticket ticket4 = createTicket(TestConsts.TICKET_TITLE_4, TestConsts.TICKET_DESC,  TestConsts.TICKET_SOLUTION, TicketType.TODO, LocalDate.now(), user1, user2, Status.CLOSED);
 
-        Comment comment1 = createComment(TestConsts.COMMENT_DESC, LocalDate.now(), user1, ticket1);
-        Comment comment21 = createComment(TestConsts.COMMENT_DESC_2, LocalDate.now(), user1, ticket2);
-        Comment comment22 = createComment(TestConsts.COMMENT_DESC_3, LocalDate.now(), user1, ticket2);
-        Comment comment23 = createComment(TestConsts.COMMENT_DESC_4, LocalDate.now(), user2, ticket2);
-        Comment comment24 = createComment(TestConsts.COMMENT_DESC_5, LocalDate.now(), user3, ticket3);
-        Comment comment25 = createComment(TestConsts.COMMENT_DESC_6, LocalDate.now(), user3, ticket4);
+        createComment(TestConsts.COMMENT_DESC, LocalDate.now(), user1, ticket1);
+        createComment(TestConsts.COMMENT_DESC_2, LocalDate.now(), user1, ticket2);
+        createComment(TestConsts.COMMENT_DESC_3, LocalDate.now(), user1, ticket2);
+        createComment(TestConsts.COMMENT_DESC_4, LocalDate.now(), user2, ticket2);
+        createComment(TestConsts.COMMENT_DESC_5, LocalDate.now(), user3, ticket3);
+        createComment(TestConsts.COMMENT_DESC_6, LocalDate.now(), user3, ticket4);
 
     }
 

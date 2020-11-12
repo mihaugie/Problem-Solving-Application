@@ -43,7 +43,7 @@ public class UserDashboardController {
 
 //DONE: MB zrobić tak metody zeby modelMap tylko raz przekazywał dane
 
-        String currentUserName = userInfoService.getCurrentUserName();
+        String currentUserName = userInfoService.getCurrentUserId();
         User currentUser = userService.getUserById(currentUserName);
 
         List<Ticket> ticketByAuthor = ticketService.getTicketByAuthor(currentUser);
