@@ -22,8 +22,8 @@
         <td th:text="${ticket.getId()}"></td>
         <td th:text="${ticket.getTitle()}"></td>
         <td th:text="${ticket.getDescription()}"></td>
-        <td th:text="${ticket.getAuthor().getEmail()}"></td>
-        <td th:text="${ticket.getResponsible().getEmail()}"></td>
+        <td th:text="${ticket.getAuthor().getNameSurename()}"></td>
+        <td th:text="${ticket.getResponsible().getNameSurename()}"></td>
         <td th:text="${ticket.getStatus()}"></td>
         <td th:text="${ticket.getTicketType()}"></td>
         <td>

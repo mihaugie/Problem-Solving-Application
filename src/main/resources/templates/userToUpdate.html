@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+
+<div>
+    <form th:action="@{/users/update}" th:object="${currentUser}" method="post">
+        <input type="textro" name="email" th:value="${currentUser.email}" readonly="">
+        <input type="text" name="password" th:value="${currentUser.password}">
+        <input type="text" name="nameSurename" th:value="${currentUser.nameSurename}">
+        <select th:field="*{role}">-->
+            <option th:each="singleRole : ${roles}" th:text="${singleRole}" th:value="${singleRole}"></option>
+        </select>
+        <button type="submit">UPDATE USER</button>
+    </form>
+</div>
+
+
+</body>
+</html>

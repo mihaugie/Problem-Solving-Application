@@ -12,11 +12,28 @@
         <th>USER</th>
         <th>PASSWORD</th>
         <th>ROLE</th>
+        <th>UPDATE</th>
     </tr>
-    <tr th:each="user : ${users}">
+    <tr th:each="user : ${usersList}">
+
+        <!--            <input type="text" class="form-control" id="c_price" th:field="*{title}">-->
         <td th:text="${user.getEmail()}"></td>
         <td th:text="${user.getPassword()}"></td>
         <td th:text="${user.getRole()}"></td>
+        <td>
+            <form th:action="@{/users/updateForm}" method="post" th:object="${usersList}">
+                <input type="hidden" name="email" th:value="${user.email}">
+                <input type="hidden" name="password" th:value="${user.password}">
+                <input type="hidden" name="nameSurename" th:value="${user.nameSurename}">
+                <input type="hidden" name="role" th:value="${user.role}">
+
+<!--                <select th:field="*{role}">-->
+<!--                    <option th:each="singleRole : ${roles}" th:text="${singleRole}" th:value="${singleRole}"></option>-->
+<!--                </select>-->
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="UPDATE USER">
+
+            </form>
+        </td>
     </tr>
 </table>
 
