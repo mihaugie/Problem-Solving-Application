@@ -21,22 +21,22 @@
 
 <p>COMMENTS:</p>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>CREATED ON</th>
-            <th>AUTHOR</th>
-            <th>COMMENT</th>
-        </tr>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>CREATED ON</th>
+        <th>AUTHOR</th>
+        <th>COMMENT</th>
+    </tr>
 
 
-<tr th:each="comment : ${selectedticket.getComments()}">
-    <td th:text="${comment.getId()}"></td>
-    <td th:text=" ${comment.getCreatedOn()}"></td>
-    <td th:text="${comment.getAuthor().getNameSurename()}"></td>
-    <td th:text="${comment.getCommentDesc()}"></td>
+    <tr th:each="comment : ${selectedticket.getComments()}">
+        <td th:text="${comment.getId()}"></td>
+        <td th:text=" ${comment.getCreatedOn()}"></td>
+        <td th:text="${comment.getAuthor().getNameSurename()}"></td>
+        <td th:text="${comment.getCommentDesc()}"></td>
 
-</tr>
+    </tr>
 </table>
 
 <form th:action="@{/tickets/{id}/comment/new (id=${selectedticket.getId()})}" method="post" th:object="${comment}">
@@ -61,12 +61,12 @@
 <br>
 <br>
 <br>
+<div th:if="${currentuser.email.equals(selectedticket.author.email) or currentuser.email.equals(selectedticket.responsible.email)} and ${selectedticket.getStatus().toString().equals('OPEN')}">
+    <form th:action="@{/tickets/{id}/close (id=${selectedticket.getId()})}" method="post">
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">
 
-<form th:action="@{/tickets/{id}/close (id=${selectedticket.getId()})}" method="post">
-    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">
-
-</form>
-
+    </form>
+</div>
 <hr>
 <p>
     <a href="../home.html" th:href="@{/}">Return to home</a>
