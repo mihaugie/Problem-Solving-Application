@@ -39,4 +39,22 @@ public class UserService {
         return userRepository.findUserByNameSurename(userNameSurename);
     }
 
+    public void updateUserPartially(final User updatedUser){
+        final User existingUser = userRepository.findByEmail(updatedUser.getEmail());
+
+        if(updatedUser.getPassword() != null){
+            existingUser.setPassword(updatedUser.getPassword());
+        }
+
+        if(updatedUser.getNameSurename() != null){
+            existingUser.setNameSurename(updatedUser.getNameSurename());
+        }
+
+        if(updatedUser.getRole() != null){
+            existingUser.setRole(updatedUser.getRole());
+        }
+
+        userRepository.save(existingUser);
+    }
+
 }

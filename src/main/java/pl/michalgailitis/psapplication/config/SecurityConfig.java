@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import pl.michalgailitis.psapplication.services.users.CustomUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -21,21 +23,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
+//                .antMatchers("/**").authenticated()
                 .and()
                 .formLogin()
-//                .loginPage("/login")//.defaultSuccessUrl("/index", true).failureUrl("/login")
-//                .and()
-//                .logout().logoutUrl("/logout").logoutSuccessUrl("/logoutView")
-//                .and()
-//                .rememberMe().key("nazwa-ciasteczka").tokenValiditySeconds(10)  //CW 7 - ZAPAMIĘTYWANIE ZALOGOWANEGO UZYTKOWNIKA
+//                .loginPage("/loginPage").permitAll()
+//                .loginProcessingUrl("/appLogin")
+//                .defaultSuccessUrl("/", true).failureUrl("/loginPage")
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/logoutView")
+                .and()
+                .rememberMe().key("nazwa-ciasteczka").tokenValiditySeconds(10)  //CW 7 - ZAPAMIĘTYWANIE ZALOGOWANEGO UZYTKOWNIKA
                 .and()
                 .httpBasic()
-                .and()
-                .logout()
                 .and()
                 .csrf().ignoringAntMatchers("/h2/**")
                 .and().csrf().disable()
                 .headers().frameOptions().disable();
+
+
 
     }
 

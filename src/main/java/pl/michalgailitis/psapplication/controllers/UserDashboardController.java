@@ -31,6 +31,13 @@ public class UserDashboardController {
 
     private static final Status USERDASHBOARDSTATUS = Status.OPEN;
 
+
+//    @RequestMapping(value = "/loginPage")
+//    public String homePage() {
+//        return "loginView";
+//    }
+
+
     @GetMapping
     public String userDashboard(final ModelMap modelMap) throws Exception {
 
@@ -49,6 +56,9 @@ public class UserDashboardController {
 
         return "userdashboard";
 
+
     }
 
 }
+
+

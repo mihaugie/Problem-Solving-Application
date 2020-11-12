@@ -5,7 +5,9 @@
     <title>User Dashboard</title>
 </head>
 <body>
-
+<form th:action="@{/logout}" method="POST" style="float: right;">
+    <input type="submit" value="Logout"/>
+</form>
 <p>
     <a href="../newticket.html" th:href="@{/tickets}">CREATE NEW TICKET</a>
 </p>
@@ -19,6 +21,7 @@
 </div>
 
 <br>
+
 <hr>
 <br>
 <h1>USER DASHBOARD</h1>
@@ -45,8 +48,8 @@
         <td th:text="${ticket.getTitle()}"></td>
         <td th:text="${ticket.getDescription()}"></td>
         <td th:text="${ticket.getProposedSolution()}"></td>
-        <td th:text="${ticket.getAuthor().getEmail()}"></td>
-        <td th:text="${ticket.getResponsible().getEmail()}"></td>
+        <td th:text="${ticket.getAuthor().getNameSurename()}"></td>
+        <td th:text="${ticket.getResponsible().getNameSurename()}"></td>
         <td th:text="${ticket.getStatus()}"></td>
         <td th:text="${ticket.getTicketType()}"></td>
         <td>
