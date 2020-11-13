@@ -14,6 +14,7 @@ import pl.michalgailitis.psapplication.services.users.UserInfoService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,14 +27,15 @@ public class TicketController {
     private final UserService userService;
 
     //MB Stringi na stałe
-    //DONE: MB zamienic repository na serwis
 
     @GetMapping("/{id}")
-    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id) throws Exception {
+    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id) {
         final Ticket selectedTicket = ticketService.getTicketById(id);
-        modelMap.addAttribute("selectedticket", selectedTicket);
-        modelMap.addAttribute("comment", new Comment());
-        modelMap.addAttribute("currentuser", userService.getUserById(userInfoService.getCurrentUserId()));
+
+        modelMap.addAllAttributes(Map.of(
+                "selectedticket", selectedTicket,
+                "comment", new Comment(),
+                "currentuser", userService.getUserById(userInfoService.getCurrentUserId())));
         return "ticketdetails";
     }
 
@@ -45,31 +47,30 @@ public class TicketController {
 
     @GetMapping
     public String getNewTicketForm(ModelMap modelMap) {
-        modelMap.addAttribute("ticket", new Ticket());
-        modelMap.addAttribute("tickettypes", ticketTypeService.getTicketTypes());
-        modelMap.addAttribute("users", userService.getAllUsers());
+
+        modelMap.addAllAttributes(Map.of(
+                "ticket", new Ticket(),
+                "tickettypes", ticketTypeService.getTicketTypes(),
+                "users", userService.getAllUsers()));
+
         return "newticket";
     }
 
 //MB - mapowanie wyrzucić do serwisu - lub do model - klasa TicketForm (Ticket.builder(). ... ) , to samo z User
     // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
 
-    //MB @Auth Principal zamiast User Info Service
+
 
     @PostMapping("/addticket")
-    public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) throws Exception {
-        ticket.setStatus(Status.OPEN);
-        ticket.setAuthor(userService.getUserById(userInfoService.getCurrentUserId()));
-        ticket.setResponsible(userService.getUserById(ticket.getResponsible().getEmail()));
+    public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) {
+
         ticketService.createTicket(ticket);
         return "redirect:/";
     }
 
 
     @PostMapping("/{id}/comment/new")
-    public String addNewCommentForm(@PathVariable Long id, Comment comment) throws Exception {
-
-        comment.setAuthor(userService.getUserById(userInfoService.getCurrentUserId()));
+    public String addNewCommentForm(@PathVariable Long id, Comment comment) {
 
         ticketService.createComment(id, comment);
         return "redirect:/tickets/{id}";
@@ -77,12 +78,9 @@ public class TicketController {
 
 
     @PostMapping("/{id}/close")
-    public String closeTicket(@PathVariable Long id) throws Exception {
+    public String closeTicket(@PathVariable Long id) {
 
-        Ticket ticketToClose = ticketService.getTicketById(id);
-        ticketToClose.setStatus(Status.CLOSED);
-
-        ticketService.closeTicket(ticketToClose);
+        ticketService.closeTicket(id);
         return "redirect:/";
     }
 
