@@ -39,9 +39,7 @@ public class UserDashboardController {
 
 
     @GetMapping
-    public String userDashboard(final ModelMap modelMap) throws Exception {
-
-//DONE: MB zrobić tak metody zeby modelMap tylko raz przekazywał dane
+    public String userDashboard(final ModelMap modelMap) {
 
         String currentUserName = userInfoService.getCurrentUserId();
         User currentUser = userService.getUserById(currentUserName);
@@ -52,13 +50,15 @@ public class UserDashboardController {
 
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
 
-        modelMap.addAllAttributes(Map.of("username", currentUser, "byauthor", ticketByAuthor, "usertickets", ticketByAuthorOrResponsible, "noofopentickets", noOfOpenTicketsForLoggedUser));
+        modelMap.addAllAttributes(Map.of(
+                "username", currentUser,
+                "byauthor", ticketByAuthor,
+                "usertickets", ticketByAuthorOrResponsible,
+                "noofopentickets", noOfOpenTicketsForLoggedUser));
 
         return "userdashboard";
 
-
     }
-
 }
 
 

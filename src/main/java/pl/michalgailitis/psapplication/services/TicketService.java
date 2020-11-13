@@ -11,6 +11,8 @@ import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
+import pl.michalgailitis.psapplication.repository.UserRepository;
+import pl.michalgailitis.psapplication.services.users.UserInfoService;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,8 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final CommentService commentService;
+    private final UserRepository userRepository;
+    private final UserInfoService userInfoService;
     private final EmailSenderImpl emailSender;
 
     //DONE: MB Zamienic exception na RunTimeException
@@ -49,14 +53,22 @@ public class TicketService {
     }
 
     public List<Ticket> getTicketByTitle(final String title) {
+
         return ticketRepository.findTicketsByTitle(title);
 
     }
 
+    //MB @Auth Principal zamiast User Info Service
+    //MB - mapowanie wyrzucić do serwisu - lub do model - klasa TicketForm (Ticket.builder(). ... ) , to samo z User
+    // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
+
     public Ticket createTicket(final Ticket ticket) {
 
-        final String addresseeOfNewTicketEmail = ticket.getResponsible().getEmail();
+        ticket.setStatus(Status.OPEN);
+        ticket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
+        ticket.setResponsible(userRepository.findByEmail(ticket.getResponsible().getEmail()));
 
+        final String addresseeOfNewTicketEmail = ticket.getResponsible().getEmail();
         emailSender.sendMail(addresseeOfNewTicketEmail, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_SUBJECT, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_BODY);
 
         return ticketRepository.save(ticket);
@@ -73,12 +85,13 @@ public class TicketService {
     }
 
     public Ticket createComment(final Long id, final Comment newComment) {
-        Optional<Ticket> ticketToAddComment = ticketRepository.findById(id);
-        ticketToAddComment.orElseThrow().getComments().add(newComment);
-        Ticket ticket = ticketToAddComment.get();
-        String addresseeOfNewCommentEmail = ticket.getResponsible().getEmail();
+        newComment.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
+        Ticket ticketToAddComment = ticketRepository.findById(id).orElseThrow();
+        ticketToAddComment.getComments().add(newComment);
+        String addresseeOfNewCommentEmail = ticketToAddComment.getResponsible().getEmail();
         emailSender.sendMail(addresseeOfNewCommentEmail, ServiceConsts.EMAIL_MESSAGE_COMMENT_CREATED_SUBJECT, ServiceConsts.EMAIL_MESSAGE_COMMENT_CREATED_BODY);
-        return ticketRepository.save(ticket);
+
+        return ticketRepository.save(ticketToAddComment);
     }
 
     public void deleteComment(final Long ticketId, final Long commentId) {
@@ -88,13 +101,16 @@ public class TicketService {
         ticketRepository.findById(ticketId).orElseThrow().getComments().stream().forEach(p -> System.out.println(p.getId()));
          System.out.println(ticketRepository.findById(ticketId).orElseThrow().getComments().remove(commentId));
 */
-//
         commentService.deleteComment(commentId);
 
     }
 
-    public Ticket closeTicket(final Ticket ticket) {
-        return ticketRepository.save(ticket);
+    public Ticket closeTicket(final Long id) {
+
+        Ticket ticketToClose = ticketRepository.findById(id).orElseThrow();
+        ticketToClose.setStatus(Status.CLOSED);
+
+        return ticketRepository.save(ticketToClose);
     }
 
     //MB: sortowanie

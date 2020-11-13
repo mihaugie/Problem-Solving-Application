@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.michalgailitis.psapplication.domain.User;
-import pl.michalgailitis.psapplication.repository.RoleRepository;
 import pl.michalgailitis.psapplication.services.RoleService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
@@ -27,28 +26,27 @@ public class UserController {
     @GetMapping
     public String showUsers(final ModelMap modelMap) {
 
-        modelMap.addAllAttributes(Map.of("usersList", userService.getAllUsers(), "roles", roleService.getRoles()));
+        modelMap.addAllAttributes(Map.of(
+                "usersList", userService.getAllUsers(),
+                "roles", roleService.getRoles()));
 
         return "users";
     }
 
-    //POPRAWIC ALLTICKETS PO POSCIE + PRZETESTOWAC
-    //POPRAWIC DROPDOWN USER W FORMULARZU
-
     @PostMapping("/updateForm")
-    public String getUpdatedUserForm(final ModelMap modelMap, final User currentUser){
+    public String getUpdatedUserForm(final ModelMap modelMap, final User currentUser) {
 
-        modelMap.addAllAttributes(Map.of("currentUser", currentUser, "roles", roleService.getRoles()));
+        modelMap.addAllAttributes(Map.of(
+                "currentUser", currentUser,
+                "roles", roleService.getRoles()));
+
         return "userToUpdate";
     }
 
     @PostMapping("/update")
-    public String updateUserForm(final User updatedUser){
+    public String updateUserForm(final User updatedUser) {
         userService.updateUserPartially(updatedUser);
 
-        return "users";
+        return "redirect:/users";
     }
-
-
-
 }
