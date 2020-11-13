@@ -5,7 +5,7 @@ import pl.michalgailitis.psapplication.model.Role;
 public interface TestConsts {
     String EMAIL_1 = "user@email.com";
     String EMAIL_2 = "user2@email.com";
-    String EMAIL_3 = "user3@email.com";
+    String EMAIL_3 = "michal.gailitis@gmail.com";
     //String PASSWORD_1 = "pass1";
     String PASSWORD_1 = "$2a$10$veYYY9zkbww0wG1EinjDye5zFBmPdLsIaQyEgzd2A0g6Toxb1HqMS";
     //String PASSWORD_2 = "pass2";

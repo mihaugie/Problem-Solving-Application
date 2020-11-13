@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.michalgailitis.psapplication.domain.*;
+import pl.michalgailitis.psapplication.mailing.EmailSenderImpl;
 import pl.michalgailitis.psapplication.model.Role;
 import pl.michalgailitis.psapplication.model.Status;
 import pl.michalgailitis.psapplication.model.TicketType;

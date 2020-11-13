@@ -28,7 +28,11 @@
 <p th:text="'WELCOME: ' + ${username.getNameSurename()}"></p>
 <p></p>
 
-<p th:text="'You have currently ' + ${noofopentickets} + ' open tickets.'"></p>
+<a1 th:text="'You have currently '"></a1>
+<a2 style="font-size: 3vw"><b>
+    <a1 style="color: crimson" th:text="${noofopentickets}"></a1>
+</b></a2>
+<a1 th:text="' open tickets.'"></a1>
 
 <p>Here are your open tickets:</p>
 <table>

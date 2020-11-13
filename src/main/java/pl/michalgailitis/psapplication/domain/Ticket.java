@@ -30,7 +30,7 @@ public class Ticket {
     @Column(name = "description")
     private String description;
 
-    @NotNull
+//    @NotNull
     @Column(name = "proposed_solution")
     private String proposedSolution;
 
