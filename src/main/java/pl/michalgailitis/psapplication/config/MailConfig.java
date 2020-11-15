@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+//MB klasa do usuniecia
 public class MailConfig {
 
     @Bean

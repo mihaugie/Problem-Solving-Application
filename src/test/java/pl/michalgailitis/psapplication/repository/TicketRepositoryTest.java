@@ -39,5 +39,6 @@ class TicketRepositoryTest {
         ticketRepository.findAll(Sort.by("proposedSolution").ascending());
     }
 
+    
 
 }

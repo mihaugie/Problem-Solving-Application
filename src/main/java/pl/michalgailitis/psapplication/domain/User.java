@@ -2,6 +2,7 @@ package pl.michalgailitis.psapplication.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.michalgailitis.psapplication.model.Role;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "users")
+@Builder
 public class User {
 
     @Id

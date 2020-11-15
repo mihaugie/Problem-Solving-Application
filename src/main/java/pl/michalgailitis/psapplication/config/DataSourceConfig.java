@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+    //!!! MB cała klasa do usunięcia - konfigurować w application.properties
+
     @Profile("sql")
     @Bean
     public DataSource getH2DataSource(){
