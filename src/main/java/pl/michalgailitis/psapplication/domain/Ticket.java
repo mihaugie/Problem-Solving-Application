@@ -62,6 +62,8 @@ public class Ticket {
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
+    //MB usunąc nulle z konstruktora
+
     public Ticket(@NotNull String title, @NotNull String description, @NotNull String proposedSolution, @NotNull TicketType ticketType, @NotNull LocalDate createdOn, @NotNull User author, @NotNull User responsible, @NotNull Status status, List<Comment> comments) {
         this.title = title;
         this.description = description;

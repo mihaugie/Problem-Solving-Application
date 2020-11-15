@@ -26,7 +26,7 @@ public class TicketController {
     private final UserInfoService userInfoService;
     private final UserService userService;
 
-    //MB Stringi na stałe
+    //MB Stringi na stałe - w ramach pól w tej klasie
 
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id) {
@@ -60,7 +60,7 @@ public class TicketController {
     // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
 
 
-
+//MB zmienic na add
     @PostMapping("/addticket")
     public String addNewTicketForm(Ticket ticket, @AuthenticationPrincipal Principal principal) {
 

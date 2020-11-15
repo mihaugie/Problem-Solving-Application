@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailSenderImpl implements EmailSender {
 
+    //MB wstrzyknac przez konstruktor
+    //Interfejs niepotrzebny - do usuniecia
     @Autowired
     private JavaMailSender javaMailSender;
 

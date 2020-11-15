@@ -1,8 +1,18 @@
 package pl.michalgailitis.psapplication.model;
 
+//MB dodac metode statyczna ktora zwraca listę typow i usunąc repository - to samo dla ROLERepository
+// z tej metody korzystac w serwisie
+
+import java.util.Arrays;
+import java.util.List;
+
 public enum TicketType {
     PROBLEM,
     BUG,
     TODO,
-    IDEA
+    IDEA;
+
+    public static List<TicketType> allTypes(){
+        return Arrays.asList(TicketType.values());
+    }
 }
