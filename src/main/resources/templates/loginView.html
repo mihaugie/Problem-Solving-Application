@@ -21,16 +21,26 @@
         <button type="submit" class="btn">Log in</button>
     </div>
 
-<!--     User Email: <input type="email" id="email" name="email"/> <br/><br/>-->
 
-<!--   Password: <input type="password" id="password" name="password"/><br/><br/>-->
-<!--    <input id="remember-me" name="remember-me" type="checkbox"/>-->
-<!--    <label for="remember-me" class="inline">Zapamiętaj mnie</label>-->
-
-
-<!--    <input type="submit" value="Sign In"/>-->
+    <input id="remember-me" name="remember-me" type="checkbox"/>
+    <label for="remember-me" class="inline">Remember Me</label>
 
 </form>
+
+<br>
+<br>
+<br>
+
+<p>
+    <a href="../newUser.html" th:href="@{/users/create}">CREATE USER</a>
+</p>
+<!--    <form th:action="@{/users/create}" method="get" th:object="${usersList}">-->
+<!--        <input type="hidden" name="email" th:value="${user.email}">-->
+<!--        <input type="hidden" name="nameSurename" th:value="${user.nameSurename}">-->
+<!--        <input type="hidden" name="role" th:value="${user.role}">-->
+<!--        <input type="submit" class="btn btn-primary btn-lg btn-block" value="UPDATE USER">-->
+<!--    </form>-->
+
 
 </body>
 </html>

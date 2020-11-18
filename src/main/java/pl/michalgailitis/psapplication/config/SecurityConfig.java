@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/h2/**").permitAll()
+                .antMatchers("/users/create/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
 //                .antMatchers("/**").authenticated()
@@ -49,11 +50,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return customUserDetailsService;
     }
 
-    //MB logowanie przez uzytkownikow - nadpisac configure
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource();
-//    }
 }

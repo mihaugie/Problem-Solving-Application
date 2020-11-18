@@ -1,11 +1,12 @@
 package pl.michalgailitis.psapplication.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import pl.michalgailitis.psapplication.model.Status;
-import pl.michalgailitis.psapplication.model.TicketType;
+import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
+import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name="tickets")
+@Entity(name = "tickets")
+@Builder
 public class Ticket {
 
     @Id
@@ -30,7 +32,7 @@ public class Ticket {
     @Column(name = "description")
     private String description;
 
-//    @NotNull
+    //    @NotNull
     @Column(name = "proposed_solution")
     private String proposedSolution;
 
@@ -39,8 +41,6 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
 
-    //MB zamienic na adnotacje
-    //@NotNull
     @Column(name = "created_on")
     @CreationTimestamp
     private LocalDate createdOn;

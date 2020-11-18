@@ -3,7 +3,7 @@ package pl.michalgailitis.psapplication.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pl.michalgailitis.psapplication.model.Status;
+import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
 

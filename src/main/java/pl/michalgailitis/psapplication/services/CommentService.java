@@ -6,13 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.repository.CommentRepository;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class CommentService {
-    
+
     private final CommentRepository commentRepository;
 
 
@@ -20,7 +18,7 @@ public class CommentService {
         return commentRepository.save(Comment);
     }
 
-    public void deleteComment(final Long id){
+    public void deleteComment(final Long id) {
         commentRepository.deleteById(id);
     }
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.michalgailitis.psapplication.model.Role;
+import pl.michalgailitis.psapplication.model.user.specifications.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
