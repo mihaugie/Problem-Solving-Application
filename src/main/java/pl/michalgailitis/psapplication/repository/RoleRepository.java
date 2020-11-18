@@ -1,7 +1,7 @@
 package pl.michalgailitis.psapplication.repository;
 
 import org.springframework.stereotype.Repository;
-import pl.michalgailitis.psapplication.model.Role;
+import pl.michalgailitis.psapplication.model.user.specifications.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;

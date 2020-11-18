@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.User;
+import pl.michalgailitis.psapplication.model.UserForm;
 import pl.michalgailitis.psapplication.repository.UserRepository;
+import pl.michalgailitis.psapplication.services.mappers.UserMapper;
 
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public User createUser (final User providedUser){
-        final User user = userMapper.toUser(providedUser);
+    public User createUser (final UserForm providedUser){
+        final User user = userMapper.createUser(providedUser);
 
         return userRepository.save(user);
     }

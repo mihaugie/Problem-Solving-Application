@@ -7,7 +7,7 @@
 <body>
 <h1>CREATE NEW TICKET</h1>
 
-<form th:action="@{/tickets/addticket}" method="post" th:object="${ticket}">
+<form th:action="@{/tickets/add}" method="post" th:object="${ticketForm}">
 
     <div class="p-3 p-lg-5 border">
         <div class="form-group row">
@@ -16,25 +16,31 @@
                 <label for="c_price" class="text-black">Title<span class="text-danger"></span></label>
                 <input type="text" class="form-control" id="c_price" th:field="*{title}" required>
             </div>
+            <br>
             <div class="col-md-6">
                 <label for="c_price" class="text-black">Description<span class="text-danger"></span></label>
                 <input type="text" class="form-control" id="c_price" th:field="*{description}" required>
+                <div th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}"></div>
             </div>
+            <br>
             <div class="col-md-6">
                 <label for="c_price" class="text-black">Proposed Solution<span class="text-danger"></span></label>
                 <input type="text" class="form-control" id="c_price" th:field="*{proposedSolution}" required>
             </div>
+            <br>
             <div class="col-md-6">
-                <label for="c_price" class="text-black">DROPDOWN TicketType<span class="text-danger">*</span></label>
+                <label for="c_price" class="text-black">DROPDOWN TicketType<span class="text-danger"></span></label>
                 <select th:field="*{ticketType}">
-                    <option th:each="ticketType : ${tickettypes}" th:text="${ticketType}" th:value="${ticketType}"></option>
+                    <option th:each="ticketType : ${tickettypes}" th:text="${ticketType}"
+                            th:value="${ticketType}"></option>
                 </select>
             </div>
-
+            <br>
             <div class="col-md-6">
-                <label for="c_price" class="text-black">DROPDOWN Responsible<span class="text-danger">*</span></label>
+                <label for="c_price" class="text-black">DROPDOWN Responsible<span class="text-danger"></span></label>
                 <select th:field="*{responsible}">
-                    <option th:each="user : ${users}" th:text="${user.getNameSurename()}" th:value="${user.getEmail()}"></option>
+                    <option th:each="user : ${users}" th:text="${user.getNameSurename()}"
+                            th:value="${user.getEmail()}"></option>
                 </select>
             </div>
 

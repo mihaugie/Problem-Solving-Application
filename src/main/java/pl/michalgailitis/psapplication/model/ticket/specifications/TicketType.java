@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.model;
+package pl.michalgailitis.psapplication.model.ticket.specifications;
 
 //MB dodac metode statyczna ktora zwraca listę typow i usunąc repository - to samo dla ROLERepository
 // z tej metody korzystac w serwisie

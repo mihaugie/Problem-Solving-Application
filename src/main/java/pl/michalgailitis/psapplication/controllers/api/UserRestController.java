@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.User;
+import pl.michalgailitis.psapplication.model.UserForm;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public User createUser(@RequestBody UserForm userForm){
+        return userService.createUser(userForm);
     }
 
 

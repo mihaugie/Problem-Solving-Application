@@ -1,7 +1,7 @@
 package pl.michalgailitis.psapplication.repository;
 
 import org.springframework.stereotype.Repository;
-import pl.michalgailitis.psapplication.model.TicketType;
+import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
 
 import java.util.ArrayList;
 import java.util.Arrays;

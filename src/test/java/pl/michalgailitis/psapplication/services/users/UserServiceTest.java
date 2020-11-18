@@ -8,8 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.michalgailitis.psapplication.domain.User;
-import pl.michalgailitis.psapplication.model.Role;
+import pl.michalgailitis.psapplication.model.UserForm;
+import pl.michalgailitis.psapplication.model.user.specifications.Role;
 import pl.michalgailitis.psapplication.repository.UserRepository;
+import pl.michalgailitis.psapplication.services.mappers.UserMapper;
 
 import java.util.Optional;
 
@@ -24,6 +26,10 @@ class UserServiceTest {
     private static final String EMAIL = "test@email.com";
 
     private static final User TEST_USER = User.builder()
+            .email(EMAIL)
+            .build();
+
+    private static final UserForm TEST_USER_FORM = UserForm.builder()
             .email(EMAIL)
             .build();
 
@@ -52,11 +58,11 @@ class UserServiceTest {
     @Test
     void shouldReturnCreatedUser() {
         //given
-        when(userMapper.toUser(TEST_USER)).thenReturn(MAPPED_USER);
+        when(userMapper.createUser(TEST_USER_FORM)).thenReturn(MAPPED_USER);
         when(userRepository.save(MAPPED_USER)).thenReturn(SAVED_USER);
 
         //when
-        User actualUser = userService.createUser(TEST_USER);
+        User actualUser = userService.createUser(TEST_USER_FORM);
 
         //then
         assertThat(actualUser).isEqualTo(SAVED_USER);

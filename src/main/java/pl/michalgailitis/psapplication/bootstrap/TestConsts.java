@@ -1,6 +1,6 @@
 package pl.michalgailitis.psapplication.bootstrap;
 
-import pl.michalgailitis.psapplication.model.Role;
+import pl.michalgailitis.psapplication.model.user.specifications.Role;
 
 public interface TestConsts {
     String EMAIL_1 = "user@email.com";

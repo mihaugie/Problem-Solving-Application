@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
+import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.services.TicketService;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class TicketRestController {
     }
 
     @PostMapping
-    public Ticket createTicket(@RequestBody Ticket ticket){
-        return ticketService.createTicket(ticket);
+    public Ticket createTicket(@RequestBody TicketForm ticketForm){
+        return ticketService.createTicket(ticketForm);
     }
 
     @DeleteMapping("/{id}")

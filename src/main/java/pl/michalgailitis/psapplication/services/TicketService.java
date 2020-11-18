@@ -1,21 +1,20 @@
 package pl.michalgailitis.psapplication.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
-import pl.michalgailitis.psapplication.mailing.EmailSenderImpl;
-import pl.michalgailitis.psapplication.model.Status;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
-import pl.michalgailitis.psapplication.repository.CommentRepository;
+import pl.michalgailitis.psapplication.mailing.EmailSender;
+import pl.michalgailitis.psapplication.model.TicketForm;
+import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
+import pl.michalgailitis.psapplication.services.mappers.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,12 +23,12 @@ import java.util.Set;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
+    private final TicketMapper ticketMapper;
     private final CommentService commentService;
     private final UserRepository userRepository;
     private final UserInfoService userInfoService;
-    private final EmailSenderImpl emailSender;
+    private final EmailSender emailSender;
 
-    //DONE: MB Zamienic exception na RunTimeException
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
@@ -43,10 +42,6 @@ public class TicketService {
     public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
         return ticketRepository.find(status, email);
     }
-//
-//    public List<Ticket> getTicketByAuthorOrResponsibleAndStatus(final User author, final User responsible, final Status status) {
-//        return ticketRepository.findTicketsByAuthorOrResponsibleAndStatus(author, responsible, status);
-//    }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
         return ticketRepository.getAllByAuthor(authorId);
@@ -62,16 +57,16 @@ public class TicketService {
     //MB - mapowanie wyrzucić do serwisu - lub do model - klasa TicketForm (Ticket.builder(). ... ) , to samo z User
     // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
 
-    public Ticket createTicket(final Ticket ticket) {
+    public Ticket createTicket(final TicketForm ticketForm) {
+        Ticket cretedTicket = ticketMapper.createTicket(ticketForm);
+        cretedTicket.setStatus(Status.OPEN);
+        cretedTicket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
+        cretedTicket.setResponsible(userRepository.findByEmail(ticketForm.getResponsible().getEmail()));
 
-        ticket.setStatus(Status.OPEN);
-        ticket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
-        ticket.setResponsible(userRepository.findByEmail(ticket.getResponsible().getEmail()));
-
-        final String addresseeOfNewTicketEmail = ticket.getResponsible().getEmail();
+        final String addresseeOfNewTicketEmail = ticketForm.getResponsible().getEmail();
         emailSender.sendMail(addresseeOfNewTicketEmail, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_SUBJECT, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_BODY);
 
-        return ticketRepository.save(ticket);
+        return ticketRepository.save(cretedTicket);
     }
 
     public void deleteTicket(final Long id) {
