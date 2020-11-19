@@ -17,7 +17,6 @@ public interface TestConsts {
     String NAME_SURENAME_3 = "Iza Bela";
     Role USER_ROLE = Role.USER;
     Role ADMIN_ROLE = Role.ADMIN;
-
     String TICKET_TITLE_1 = "Ticket title 1";
     String TICKET_TITLE_2 = "Ticket title 2";
     String TICKET_TITLE_3 = "Ticket title 3";
@@ -30,5 +29,4 @@ public interface TestConsts {
     String COMMENT_DESC_4 = "Comment Examplary Description 4";
     String COMMENT_DESC_5 = "Comment Examplary Description 5";
     String COMMENT_DESC_6 = "Comment Examplary Description 6";
-
 }

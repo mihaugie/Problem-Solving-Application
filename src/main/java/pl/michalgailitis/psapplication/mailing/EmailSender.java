@@ -12,9 +12,7 @@ public class EmailSender {
     private final JavaMailSender javaMailSender;
 
     public void sendMail(String to, String subject, String content) {
-
         SimpleMailMessage message = new SimpleMailMessage();
-
         message.setFrom("noreply@gmail.com");
         message.setTo(to);
         message.setSubject(subject);

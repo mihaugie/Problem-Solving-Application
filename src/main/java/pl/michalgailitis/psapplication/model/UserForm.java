@@ -19,9 +19,11 @@ public class UserForm {
     @NotBlank
     @Email(message = "Needs to have email format")
     private String email;
+
     @NotNull
     @Length(min = 3, message = "Minumum password length is 3")
     private String password;
+
     @NotBlank
     @Length(min = 3, message = "Minimum length is 3")
     private String nameSurename;

@@ -14,7 +14,6 @@ import pl.michalgailitis.psapplication.services.users.CustomUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private final CustomUserDetailsService customUserDetailsService;
 
     @Override
@@ -40,14 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().ignoringAntMatchers("/h2/**")
                 .and().csrf().disable()
                 .headers().frameOptions().disable();
-
-
-
     }
 
     @Override
     protected UserDetailsService userDetailsService() {
         return customUserDetailsService;
     }
-
 }

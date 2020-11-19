@@ -13,7 +13,6 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-
     public Comment createComment(final Comment Comment) {
         return commentRepository.save(Comment);
     }

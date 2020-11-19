@@ -24,16 +24,13 @@ public class User {
     @Column(name = "email")
     private String email;
 
-
     @NotNull
     @Column(name = "password")
     private String password;
 
-
     @NotNull
     @Column(name = "name_surename")
     private String nameSurename;
-
 
     @NotNull
     @Column(name = "role")
@@ -41,12 +38,12 @@ public class User {
     private Role role;
 
     @OneToMany
-    @JoinColumn(name="author_email")
+    @JoinColumn(name = "author_email")
     @JsonIgnore
     private List<Ticket> ticketsAsAuthor;
 
     @OneToMany
-    @JoinColumn(name="responsible_email")
+    @JoinColumn(name = "responsible_email")
     @JsonIgnore
     private List<Ticket> ticketsAsResponsible;
 

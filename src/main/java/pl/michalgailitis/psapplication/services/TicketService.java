@@ -1,6 +1,7 @@
 package pl.michalgailitis.psapplication.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
@@ -14,6 +15,7 @@ import pl.michalgailitis.psapplication.repository.UserRepository;
 import pl.michalgailitis.psapplication.services.mappers.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +35,7 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    //dodać wyjątki  własnego typu
+    //TODO dodać wyjątki  własnego typu
     public Ticket getTicketById(Long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
@@ -48,24 +50,16 @@ public class TicketService {
     }
 
     public List<Ticket> getTicketByTitle(final String title) {
-
         return ticketRepository.findTicketsByTitle(title);
-
     }
-
-    //MB @Auth Principal zamiast User Info Service
-    //MB - mapowanie wyrzucić do serwisu - lub do model - klasa TicketForm (Ticket.builder(). ... ) , to samo z User
-    // services/mapper/TicketMapper i ten mapper wstrzykiwany jest TicketService do mapowania TicketForm na Ticket
 
     public Ticket createTicket(final TicketForm ticketForm) {
         Ticket cretedTicket = ticketMapper.createTicket(ticketForm);
         cretedTicket.setStatus(Status.OPEN);
         cretedTicket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
         cretedTicket.setResponsible(userRepository.findByEmail(ticketForm.getResponsible().getEmail()));
-
         final String addresseeOfNewTicketEmail = ticketForm.getResponsible().getEmail();
-        emailSender.sendMail(addresseeOfNewTicketEmail, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_SUBJECT, ServiceConsts.EMAIL_MESSAGE_TICKET_CREATED_BODY);
-
+        emailSender.sendMail(addresseeOfNewTicketEmail, MailingMessages.EMAIL_MESSAGE_TICKET_CREATED_SUBJECT, MailingMessages.EMAIL_MESSAGE_TICKET_CREATED_BODY);
         return ticketRepository.save(cretedTicket);
     }
 
@@ -84,8 +78,7 @@ public class TicketService {
         Ticket ticketToAddComment = ticketRepository.findById(id).orElseThrow();
         ticketToAddComment.getComments().add(newComment);
         String addresseeOfNewCommentEmail = ticketToAddComment.getResponsible().getEmail();
-        emailSender.sendMail(addresseeOfNewCommentEmail, ServiceConsts.EMAIL_MESSAGE_COMMENT_CREATED_SUBJECT, ServiceConsts.EMAIL_MESSAGE_COMMENT_CREATED_BODY);
-
+        emailSender.sendMail(addresseeOfNewCommentEmail, MailingMessages.EMAIL_MESSAGE_COMMENT_CREATED_SUBJECT, MailingMessages.EMAIL_MESSAGE_COMMENT_CREATED_BODY);
         return ticketRepository.save(ticketToAddComment);
     }
 
@@ -97,18 +90,14 @@ public class TicketService {
          System.out.println(ticketRepository.findById(ticketId).orElseThrow().getComments().remove(commentId));
 */
         commentService.deleteComment(commentId);
-
     }
 
     public Ticket closeTicket(final Long id) {
-
         Ticket ticketToClose = ticketRepository.findById(id).orElseThrow();
         ticketToClose.setStatus(Status.CLOSED);
-
         return ticketRepository.save(ticketToClose);
     }
 
-    //MB: sortowanie
+    //TODO MB: sortowanie
 //        ticketRepository.findAll(Sort.by("proposedSolution").ascending());
-
 }

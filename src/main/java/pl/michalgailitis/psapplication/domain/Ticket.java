@@ -32,7 +32,6 @@ public class Ticket {
     @Column(name = "description")
     private String description;
 
-    //    @NotNull
     @Column(name = "proposed_solution")
     private String proposedSolution;
 
@@ -45,11 +44,9 @@ public class Ticket {
     @CreationTimestamp
     private LocalDate createdOn;
 
-    //@NotNull
     @ManyToOne
     private User author;
 
-    //@NotNull
     @ManyToOne
     private User responsible;
 
@@ -90,5 +87,4 @@ public class Ticket {
                 ", status=" + status +
                 '}';
     }
-
 }
