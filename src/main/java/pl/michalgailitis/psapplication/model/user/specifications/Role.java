@@ -1,8 +1,13 @@
 package pl.michalgailitis.psapplication.model.user.specifications;
 
-// DONE: wyrzucic do model Enumy, w domain są encje
+import java.util.Arrays;
+import java.util.List;
 
 public enum Role {
     USER,
-    ADMIN
+    ADMIN;
+
+    public static List<Role> allTypes(){
+        return Arrays.asList(Role.values());
+    }
 }

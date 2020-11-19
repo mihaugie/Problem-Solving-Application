@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserInfoService {
 
-
     public String getCurrentUserId() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -19,7 +18,5 @@ public class UserInfoService {
             String username = principal.toString();
             return username;
         }
-
     }
-
 }

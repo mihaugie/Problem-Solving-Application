@@ -17,7 +17,7 @@ public class UserRestController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userService.getAllUsers();
     }
 
@@ -27,15 +27,13 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody UserForm userForm){
+    public User createUser(@RequestBody UserForm userForm) {
         return userService.createUser(userForm);
     }
 
-
     @DeleteMapping("/{email}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable(name = "email") final String email){
+    public void deleteUser(@PathVariable(name = "email") final String email) {
         userService.deleteUser(email);
     }
-
 }

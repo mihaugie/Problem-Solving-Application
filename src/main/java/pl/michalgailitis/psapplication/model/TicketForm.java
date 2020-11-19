@@ -13,15 +13,20 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketForm {
+
     @NotNull
     private String title;
+
     @NotNull
     @Length(min = 5, message = "Minimum lenght is 5")
     private String description;
+
     @NotNull
     private String proposedSolution;
+
     @NotNull
     private TicketType ticketType;
+
     @NotNull
     private User responsible;
 }

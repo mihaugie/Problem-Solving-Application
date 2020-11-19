@@ -18,7 +18,7 @@ public class TicketRestController {
     private final TicketService ticketService;
 
     @GetMapping
-    public List<Ticket> getTickets(){
+    public List<Ticket> getTickets() {
         return ticketService.getAllTickets();
     }
 
@@ -28,13 +28,13 @@ public class TicketRestController {
     }
 
     @PostMapping
-    public Ticket createTicket(@RequestBody TicketForm ticketForm){
+    public Ticket createTicket(@RequestBody TicketForm ticketForm) {
         return ticketService.createTicket(ticketForm);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTicket(@PathVariable(name = "id") Long id){
+    public void deleteTicket(@PathVariable(name = "id") Long id) {
         ticketService.deleteTicket(id);
     }
 
@@ -45,7 +45,7 @@ public class TicketRestController {
 
     @PutMapping("/{id}/comments")
     @ResponseStatus(HttpStatus.CREATED)
-    public Ticket addComment(@PathVariable(name = "id") Long id, @RequestBody Comment newComment){
+    public Ticket addComment(@PathVariable(name = "id") Long id, @RequestBody Comment newComment) {
 
         return ticketService.createComment(id, newComment);
     }
@@ -53,8 +53,7 @@ public class TicketRestController {
     //póki co nie potrzeny tutaj ticket_id - poprawnosc tej logiki usuwania komentarza do weryfikacji po stworzeniu frontu
     @DeleteMapping("{ticket_id}/comments/{comment_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable(name = "ticket_id") Long ticket_id, @PathVariable(name = "comment_id") Long comment_id){
+    public void deleteComment(@PathVariable(name = "ticket_id") Long ticket_id, @PathVariable(name = "comment_id") Long comment_id) {
         ticketService.deleteComment(ticket_id, comment_id);
     }
-
 }

@@ -12,9 +12,6 @@ import java.util.Set;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-
-
-
     @Query(value = "SELECT t FROM tickets t WHERE t.status=:status AND (t.author.email=:email OR t.responsible.email=:email)")
     Set<Ticket> find(@Param("status") Status status, @Param("email") String email);
 
@@ -26,8 +23,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> getAllByAuthor(User authorId);
 
-    //SORT:
-
+    //TODO SORT:
     List<Ticket> findAllByOrderByStatusAsc();
 
 }
