@@ -1,7 +1,7 @@
 package pl.michalgailitis.psapplication.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Comment;
@@ -14,11 +14,15 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
 import pl.michalgailitis.psapplication.services.mappers.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -96,6 +100,15 @@ public class TicketService {
         Ticket ticketToClose = ticketRepository.findById(id).orElseThrow();
         ticketToClose.setStatus(Status.CLOSED);
         return ticketRepository.save(ticketToClose);
+    }
+
+    public Page<Ticket> findPaginated(final int pageNumber, final int pageSize,
+                                      final String sortField, final String sortDirection) {
+        log.info("Fetching the paginated tickets from the dB.");
+        final Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        final Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+        return ticketRepository.findAll(pageable);
     }
 
     //TODO MB: sortowanie
