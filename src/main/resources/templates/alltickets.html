@@ -7,6 +7,12 @@
 <body>
 <h1>ALL TICKETS</h1>
 
+<!--    filtering featue -->
+<form th:action="@{/tickets/all}" method="get">
+    <input id="txtSearch" type="text" name="keyword">
+    <button type="submit">SEARCH</button>
+</form>
+
 <table>
     <tr>
         <th>ID</th>

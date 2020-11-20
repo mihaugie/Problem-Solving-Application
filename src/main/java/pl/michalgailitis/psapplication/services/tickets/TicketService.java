@@ -47,8 +47,12 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
-    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
-        return ticketRepository.find(status, email);
+//    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+//        return ticketRepository.find(status, email);
+//    }
+
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email, final String keyword) {
+        return ticketRepository.findForUserDashboard(status, email, keyword);
     }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
@@ -112,6 +116,12 @@ public class TicketService {
         final Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
         return ticketRepository.findAll(pageable);
     }
+
+    public List<Ticket> findByKeyword(String keyword){
+        return ticketRepository.findByKeyword(keyword);
+    }
+
+
     //TODO MB: sortowanie
 //        ticketRepository.findAll(Sort.by("proposedSolution").ascending());
 }

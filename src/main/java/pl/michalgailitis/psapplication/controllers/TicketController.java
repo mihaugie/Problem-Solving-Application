@@ -42,8 +42,12 @@ public class TicketController {
     }
 
     @GetMapping("/all")
-    public String getAllTickets(ModelMap modelMap) {
-        modelMap.addAttribute("tickets", ticketService.getAllTickets());
+    public String getAllTickets(ModelMap modelMap, String keyword) {
+        if (keyword != null) {
+            modelMap.addAttribute("tickets", ticketService.findByKeyword(keyword));
+        } else {
+            modelMap.addAttribute("tickets", ticketService.getAllTickets());
+        }
         return "alltickets";
     }
 
@@ -81,7 +85,6 @@ public class TicketController {
     public String viewIndexPage() {
         log.info("Redirecting the index page to the controller method for fetching the employees in a "
                 + "paginated fashion.");
-        // During the index page we are using the sort-field as id and sort-dir as asc.
         return "redirect:/tickets/page/1?sort-field=id&sort-dir=asc";
     }
 
@@ -93,25 +96,16 @@ public class TicketController {
                                 final Model model) {
         log.info("Getting the employees in a paginated way for page-number = {}, sort-field = {}, and "
                 + "sort-direction = {}.", pageNo, sortField, sortDir);
-        // Hardcoding the page-size to 15.
         final int pageSize = 2;
         final Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize, sortField, sortDir);
         final List<Ticket> listTickets = page.getContent();
-
-        // Creating the model response.
-        // Note for simplicity purpose we are not making the use of ResponseDto here.
-        // In ideal cases the response will be encapsulated in a class.
-        // pagination parameters
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        // sorting parameters
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        // employees
         model.addAttribute("listTickets", listTickets);
         return "ticketsView";
     }
-
 }

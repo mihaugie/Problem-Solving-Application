@@ -27,15 +27,13 @@ public class UserDashboardController {
     private final UserService userService;
 
     @GetMapping
-    public String userDashboard(final ModelMap modelMap, @AuthenticationPrincipal Principal principal) {
+    public String userDashboard(final ModelMap modelMap, @AuthenticationPrincipal Principal principal, String keyword) {
         String currentUserName = userInfoService.getCurrentUserId();
         User currentUser = userService.getUserById(currentUserName);
-        List<Ticket> ticketByAuthor = ticketService.getTicketByAuthor(currentUser);
-        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName());
+        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword);
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
         modelMap.addAllAttributes(Map.of(
                 "username", currentUser,
-                "byauthor", ticketByAuthor,
                 "usertickets", ticketByAuthorOrResponsible,
                 "noofopentickets", noOfOpenTicketsForLoggedUser));
         return "userdashboard";
