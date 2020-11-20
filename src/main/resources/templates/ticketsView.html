@@ -25,6 +25,14 @@
 <body>
 <div class="container">
     <h3 class="text-info text-center mt-20">Sorting Example : Tickets</h3>
+
+    <!--    filtering featue -->
+    <form th:action="@{/tickets/all}" method="get">
+        <input id="txtSearch" type="text" name="keyword">
+        <button type="submit">SEARCH</button>
+    </form>
+
+
     <!-- employees table -->
     <table class="table table-striped mt-20 text-center" id="ticketsTable">
         <thead>
@@ -35,7 +43,8 @@
             </th>
             <!-- sorting control via employee firstname -->
             <th>
-                <a th:href="@{'/tickets/page/' + ${currentPage} + '?sort-field=ticketType&sort-dir=' + ${reverseSortDir}}">Ticket Type</a>
+                <a th:href="@{'/tickets/page/' + ${currentPage} + '?sort-field=ticketType&sort-dir=' + ${reverseSortDir}}">Ticket
+                    Type</a>
             </th>
             <!-- sorting control via employee lastname -->
             <th>
@@ -79,14 +88,14 @@
                    th:if="${currentPage < totalPages}">
                     Next
                 </a>
-<!--                <span th:unless="${currentPage == totalPages}">Next</span>-->
+                <!--                <span th:unless="${currentPage == totalPages}">Next</span>-->
             </div>
             <div class="col-sm-1">
                 <a th:href="@{'/tickets/page/' + ${totalPages} + '?sort-field=' + ${sortField} + '&sort-dir=' + ${sortDir}}"
                    th:if="${currentPage < totalPages}">
                     Last
                 </a>
-<!--                <span th:unless="${currentPage < totalPages}">Last</span>-->
+                <!--                <span th:unless="${currentPage < totalPages}">Last</span>-->
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
-import pl.michalgailitis.psapplication.services.TicketService;
+import pl.michalgailitis.psapplication.services.tickets.TicketService;
 
 import java.util.List;
 

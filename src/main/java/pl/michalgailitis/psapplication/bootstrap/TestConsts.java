@@ -22,6 +22,8 @@ public interface TestConsts {
     String TICKET_TITLE_3 = "Ticket title 3";
     String TICKET_TITLE_4 = "Ticket title 4";
     String TICKET_DESC = "Description";
+    String TICKET_DESC2 = "What has happened";
+    String TICKET_DESC3 = "There is something going on";
     String TICKET_SOLUTION = "Solution";
     String COMMENT_DESC = "Comment Examplary Description 1";
     String COMMENT_DESC_2 = "Comment Examplary Description 2";

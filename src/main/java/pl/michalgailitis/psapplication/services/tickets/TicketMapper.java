@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.services.mappers;
+package pl.michalgailitis.psapplication.services.tickets;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;

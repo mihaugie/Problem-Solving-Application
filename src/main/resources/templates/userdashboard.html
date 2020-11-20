@@ -37,6 +37,12 @@
 </b></a2>
 <a1 th:text="' open tickets.'"></a1>
 
+<!--    filtering featue -->
+<form th:action="@{/}" method="get">
+    <input id="txtSearch" type="text" name="keyword">
+    <button type="submit">SEARCH</button>
+</form>
+
 <p>Here are your open tickets:</p>
 <table>
     <tr>

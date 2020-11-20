@@ -1,4 +1,4 @@
-package pl.michalgailitis.psapplication.services;
+package pl.michalgailitis.psapplication.services.tickets;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,9 @@ import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
 import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
-import pl.michalgailitis.psapplication.services.mappers.TicketMapper;
+import pl.michalgailitis.psapplication.services.CommentService;
+import pl.michalgailitis.psapplication.services.MailingMessages;
+import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,8 +47,12 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
-    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
-        return ticketRepository.find(status, email);
+//    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+//        return ticketRepository.find(status, email);
+//    }
+
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email, final String keyword) {
+        return ticketRepository.findForUserDashboard(status, email, keyword);
     }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
@@ -110,6 +116,11 @@ public class TicketService {
         final Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
         return ticketRepository.findAll(pageable);
     }
+
+    public List<Ticket> findByKeyword(String keyword){
+        return ticketRepository.findByKeyword(keyword);
+    }
+
 
     //TODO MB: sortowanie
 //        ticketRepository.findAll(Sort.by("proposedSolution").ascending());
