@@ -9,17 +9,23 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
+import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.services.TicketService;
+import pl.michalgailitis.psapplication.services.mappers.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -29,10 +35,12 @@ public class TicketController {
 
     private final TicketService ticketService;
     private final UserService userService;
+    private final TicketRepository ticketRepository;
+    private final TicketMapper ticketMapper;
 
     @GetMapping("/{id}")
-    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) {
-        final Ticket selectedTicket = ticketService.getTicketById(id);
+    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) throws IOException {
+        final TicketForm selectedTicket = ticketService.getTicketFormById(id);
 
         modelMap.addAllAttributes(Map.of(
                 "selectedticket", selectedTicket,
@@ -57,7 +65,7 @@ public class TicketController {
     }
 
     @PostMapping("/add")
-    public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) {
+    public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) throws IOException {
         if (errors.hasErrors()) {
             return "newTicket";
         }
@@ -85,7 +93,6 @@ public class TicketController {
         return "redirect:/tickets/page/1?sort-field=id&sort-dir=asc";
     }
 
-    // URL - http://localhost:10092/page/1?sort-field=firstName&sort-dir=desc
     @GetMapping(value = "/page/{page-number}")
     public String findPaginated(@PathVariable(name = "page-number") final int pageNo,
                                 @RequestParam(name = "sort-field") final String sortField,
@@ -93,25 +100,50 @@ public class TicketController {
                                 final Model model) {
         log.info("Getting the employees in a paginated way for page-number = {}, sort-field = {}, and "
                 + "sort-direction = {}.", pageNo, sortField, sortDir);
-        // Hardcoding the page-size to 15.
         final int pageSize = 5;
         final Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize, sortField, sortDir);
         final List<Ticket> listTickets = page.getContent();
 
-        // Creating the model response.
-        // Note for simplicity purpose we are not making the use of ResponseDto here.
-        // In ideal cases the response will be encapsulated in a class.
-        // pagination parameters
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        // sorting parameters
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        // employees
         model.addAttribute("listTickets", listTickets);
         return "ticketsView";
     }
 
+    @PostMapping(value = "/upload")
+    public String saveTicket(@ModelAttribute("selectedticket") TicketForm ticketForm,
+                               Model uiModel, @RequestParam(value="file") MultipartFile file) throws IOException {
+
+
+        TicketForm ticketFormById = ticketService.getTicketFormById(ticketForm.getId());
+        ticketFormById.setTicketPhoto(file);
+        Ticket ticket = ticketMapper.createTicket(ticketFormById);
+
+
+//        System.out.println(ticketFormById);
+//        byte[] bytes = file.getBytes();
+//        ticketById.setTicketPhoto(bytes);
+
+//        uiModel.asMap().clear();
+//        //process upload file
+//        if(file != null) {
+//            byte[] filecontent = null;
+//            try
+//            {
+//                InputStream inputStream = file.getInputStream();
+//                if(inputStream == null)
+//                filecontent = IOUtils.toByteArray(inputStream);
+//                ticket.setTicketPhoto(filecontent);
+//            }catch(IOException ex) {
+//            }
+//            ticket.setTicketPhoto(filecontent);
+//        }
+
+        ticketRepository.save(ticket);
+        return "redirect:/ticketdetails/" + ticket.getId().toString();
+    }
 }

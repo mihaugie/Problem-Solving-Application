@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +46,11 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
+    public TicketForm getTicketFormById(Long id) throws IOException {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        return ticketMapper.createTicketForm(ticket);
+    }
+
     public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
         return ticketRepository.find(status, email);
     }
@@ -57,7 +63,7 @@ public class TicketService {
         return ticketRepository.findTicketsByTitle(title);
     }
 
-    public Ticket createTicket(final TicketForm ticketForm) {
+    public Ticket createTicket(final TicketForm ticketForm) throws IOException {
         Ticket cretedTicket = ticketMapper.createTicket(ticketForm);
         cretedTicket.setStatus(Status.OPEN);
         cretedTicket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));

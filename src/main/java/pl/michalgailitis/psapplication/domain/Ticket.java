@@ -50,6 +50,10 @@ public class Ticket {
     @ManyToOne
     private User responsible;
 
+    @Lob
+    @Column(name="ticket_photo")
+    private byte[] ticketPhoto;
+
     @NotNull
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

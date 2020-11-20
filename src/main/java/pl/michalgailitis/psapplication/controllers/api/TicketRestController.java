@@ -8,6 +8,7 @@ import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.services.TicketService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class TicketRestController {
     }
 
     @PostMapping
-    public Ticket createTicket(@RequestBody TicketForm ticketForm) {
+    public Ticket createTicket(@RequestBody TicketForm ticketForm) throws IOException {
         return ticketService.createTicket(ticketForm);
     }
 
