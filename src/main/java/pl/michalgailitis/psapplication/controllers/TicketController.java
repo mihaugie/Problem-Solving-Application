@@ -13,7 +13,7 @@ import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
-import pl.michalgailitis.psapplication.services.TicketService;
+import pl.michalgailitis.psapplication.services.tickets.TicketService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import javax.validation.Valid;
@@ -94,7 +94,7 @@ public class TicketController {
         log.info("Getting the employees in a paginated way for page-number = {}, sort-field = {}, and "
                 + "sort-direction = {}.", pageNo, sortField, sortDir);
         // Hardcoding the page-size to 15.
-        final int pageSize = 5;
+        final int pageSize = 2;
         final Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize, sortField, sortDir);
         final List<Ticket> listTickets = page.getContent();
 

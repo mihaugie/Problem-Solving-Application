@@ -11,7 +11,6 @@ import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.model.UserForm;
 import pl.michalgailitis.psapplication.model.user.specifications.Role;
 import pl.michalgailitis.psapplication.repository.UserRepository;
-import pl.michalgailitis.psapplication.services.mappers.UserMapper;
 
 import java.util.Optional;
 
