@@ -75,7 +75,7 @@
 <!--        </form>-->
 <!--    </div>-->
 
-    <form  class="form-horizontal" th:object="${selectedticket}" th:action="@{/tickets/upload}" method="post" enctype="multipart/form-data">
+    <form  class="form-horizontal" th:object="${selectedticket}" th:action="@{/tickets/__${selectedticket.getId()}__/upload}" method="post" enctype="multipart/form-data">
 <!--        <input type="hidden" th:field="*{id}"/>-->
 <!--        <div class="form-group">-->
 <!--            <label class="col-sm-2 control-label">Ticket Name</label>-->

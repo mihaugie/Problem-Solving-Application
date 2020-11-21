@@ -114,13 +114,12 @@ public class TicketController {
         return "ticketsView";
     }
 
-    @PostMapping(value = "/upload")
-    public String saveTicket(@ModelAttribute("selectedticket") TicketForm ticketForm,
-                               Model uiModel, @RequestParam(value="file") MultipartFile file) throws IOException {
+    @PostMapping(value = "/{id}/upload")
+    public String saveTicket(@ModelAttribute("selectedticket") TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
 
 
-        TicketForm ticketFormById = ticketService.getTicketFormById(ticketForm.getId());
-        ticketFormById.setTicketPhoto(file);
+        TicketForm ticketFormById = ticketService.getTicketFormById(id);
+        ticketFormById.setTicketPhoto(ticketForm.getTicketPhoto());
         Ticket ticket = ticketMapper.createTicket(ticketFormById);
 
 
