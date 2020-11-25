@@ -30,6 +30,9 @@ public class TicketController {
     private final TicketService ticketService;
     private final UserService userService;
 
+    //TODO wrzucanie itemow do modelMapy w osobnej metodzie -
+    //TODO pozmieniac konwencje na camelCase
+
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) {
         final Ticket selectedTicket = ticketService.getTicketById(id);
@@ -59,13 +62,14 @@ public class TicketController {
                 "users", userService.getAllUsers()));
         return "newTicket";
     }
-
+//TODO wyswietlic "Successfull message" - stworzyc stringa, przeslac modelMApa i wyslac do strony redirect i wyswietlic  z th:if
     @PostMapping("/add")
     public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) {
         if (errors.hasErrors()) {
             return "newTicket";
         }
         ticketService.createTicket(ticketForm);
+
         return "redirect:/";
     }
 
@@ -88,6 +92,7 @@ public class TicketController {
         return "redirect:/tickets/page/1?sort-field=id&sort-dir=asc";
     }
 
+    //TODO TicketSearchController - wyrzucic do osobnego Contr.
     // URL - http://localhost:10092/page/1?sort-field=firstName&sort-dir=desc
     @GetMapping(value = "/page/{page-number}")
     public String findPaginated(@PathVariable(name = "page-number") final int pageNo,

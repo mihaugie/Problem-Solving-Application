@@ -83,6 +83,7 @@ public class TicketService {
 
     }
 
+    //TODO uszczegolowic nazwy ze chodzi o ticket Comment
     public Ticket createComment(final Long id, final Comment newComment) {
         newComment.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
         Ticket ticketToAddComment = ticketRepository.findById(id).orElseThrow();
@@ -108,6 +109,7 @@ public class TicketService {
         return ticketRepository.save(ticketToClose);
     }
 
+    //TODO wyrzucic do Ticket SearchService, a tu zostawic TicketCRUDService
     public Page<Ticket> findPaginated(final int pageNumber, final int pageSize,
                                       final String sortField, final String sortDirection) {
         log.info("Fetching the paginated tickets from the dB.");

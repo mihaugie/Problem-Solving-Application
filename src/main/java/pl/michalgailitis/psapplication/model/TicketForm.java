@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class TicketForm {
 
+    //TODO dodac message properties i w zaleznosci od locale tlumaczyc messages
+    //TODO dodac wiadomosc do notNulli
+
     @NotNull
     private String title;
 

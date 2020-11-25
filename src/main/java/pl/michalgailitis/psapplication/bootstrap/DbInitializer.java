@@ -21,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DbInitializer implements CommandLineRunner {
 
+    //TODO dodac caly component do profilu dev - spring sczytuje nazwe profilu z nazwy pliku properties po "-"
+
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final TicketRepository ticketRepository;
@@ -44,6 +46,8 @@ public class DbInitializer implements CommandLineRunner {
         createComment(TestConsts.COMMENT_DESC_4, LocalDate.now(), user2, ticket2);
         createComment(TestConsts.COMMENT_DESC_5, LocalDate.now(), user3, ticket3);
         createComment(TestConsts.COMMENT_DESC_6, LocalDate.now(), user3, ticket4);
+
+        System.out.println("test");
     }
 
     private Ticket createTicket(String title, String description, String proposedSolution, TicketType ticketType, LocalDate createdOn, User author, User responsible, Status status) {

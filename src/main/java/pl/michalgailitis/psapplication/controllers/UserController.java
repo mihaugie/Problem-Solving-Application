@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 import pl.michalgailitis.psapplication.domain.User;
 import pl.michalgailitis.psapplication.model.UserForm;
 import pl.michalgailitis.psapplication.model.user.specifications.Role;
@@ -55,9 +56,11 @@ public class UserController {
         return "userToUpdate";
     }
 
+    //TODO inny sposob zwracania url
     @PostMapping("/update")
-    public String updateUserForm(final User updatedUser) {
+    public RedirectView updateUserForm(final User updatedUser) {
         userService.updateUserPartially(updatedUser);
-        return "redirect:/users";
+        return new RedirectView("/users");
+//        return "redirect:/users";
     }
 }

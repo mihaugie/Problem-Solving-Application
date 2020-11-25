@@ -16,6 +16,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
 
+    //TODO wyrzucic stałe i komentarze
+    //TODO sprawdz dzialanie remember me
+    //TODO zamienic to na profil dev i zostawic csrf. ignore. h2 - w prod usunąć
+    //
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

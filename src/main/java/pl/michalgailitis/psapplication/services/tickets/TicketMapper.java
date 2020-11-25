@@ -12,8 +12,8 @@ import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
 import javax.validation.constraints.NotNull;
 
 @Component
-@RequiredArgsConstructor
-@Transactional
+//@RequiredArgsConstructor
+//@Transactional
 public class TicketMapper {
     public Ticket createTicket(TicketForm ticketForm) {
         return Ticket.builder()
