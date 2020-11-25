@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
@@ -21,7 +22,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -47,12 +51,30 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
+
 //    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
 //        return ticketRepository.find(status, email);
 //    }
 
     public Set<Ticket> getTicketForUserDashboard(final Status status, final String email, final String keyword) {
         return ticketRepository.findForUserDashboard(status, email, keyword);
+    }
+    
+    public TicketForm getTicketFormById(Long id) throws IOException {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+//        byte[] ticketPhoto = ticket.getTicketPhoto();
+//        String photo = null;
+//        if(ticketPhoto!=null) {
+//            photo = Base64.getEncoder().encodeToString(ticketPhoto);
+//        }
+
+
+        return ticketMapper.createTicketForm(ticket);
+    }
+
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+        return ticketRepository.find(status, email);
+
     }
 
     public List<Ticket> getTicketByAuthor(final User authorId) {
@@ -63,7 +85,7 @@ public class TicketService {
         return ticketRepository.findTicketsByTitle(title);
     }
 
-    public Ticket createTicket(final TicketForm ticketForm) {
+    public Ticket createTicket(final TicketForm ticketForm) throws IOException {
         Ticket cretedTicket = ticketMapper.createTicket(ticketForm);
         cretedTicket.setStatus(Status.OPEN);
         cretedTicket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
@@ -117,8 +139,19 @@ public class TicketService {
         return ticketRepository.findAll(pageable);
     }
 
+
     public List<Ticket> findByKeyword(String keyword){
         return ticketRepository.findByKeyword(keyword);
+    }
+
+
+    public void addPhoto(final Long id, final MultipartFile photo) throws IOException {
+        Ticket ticketToBeUpdated = ticketRepository.findById(id).orElseThrow();
+
+        byte[] photoBytes = photo.getBytes();
+
+        ticketToBeUpdated.setTicketPhoto(photoBytes);
+
     }
 
 
