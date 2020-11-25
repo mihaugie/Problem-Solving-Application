@@ -6,10 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
+import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.User;
+import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -35,5 +38,9 @@ public class TicketForm {
     @NotNull
     private User responsible;
 
-    private MultipartFile ticketPhoto;
+    private List<Comment> comments;
+    private Status status;
+    private User author;
+    private MultipartFile ticketFormPhoto;
+    private String stringTicketPhoto;
 }

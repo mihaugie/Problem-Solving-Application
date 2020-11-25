@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
@@ -20,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -48,6 +51,13 @@ public class TicketService {
 
     public TicketForm getTicketFormById(Long id) throws IOException {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
+//        byte[] ticketPhoto = ticket.getTicketPhoto();
+//        String photo = null;
+//        if(ticketPhoto!=null) {
+//            photo = Base64.getEncoder().encodeToString(ticketPhoto);
+//        }
+
+
         return ticketMapper.createTicketForm(ticket);
     }
 
@@ -115,6 +125,15 @@ public class TicketService {
                 Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         final Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
         return ticketRepository.findAll(pageable);
+    }
+
+    public void addPhoto(final Long id, final MultipartFile photo) throws IOException {
+        Ticket ticketToBeUpdated = ticketRepository.findById(id).orElseThrow();
+
+        byte[] photoBytes = photo.getBytes();
+
+        ticketToBeUpdated.setTicketPhoto(photoBytes);
+
     }
 
     //TODO MB: sortowanie

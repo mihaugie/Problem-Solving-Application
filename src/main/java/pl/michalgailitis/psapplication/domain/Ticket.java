@@ -52,6 +52,7 @@ public class Ticket {
 
     @Lob
     @Column(name="ticket_photo")
+
     private byte[] ticketPhoto;
 
     @NotNull

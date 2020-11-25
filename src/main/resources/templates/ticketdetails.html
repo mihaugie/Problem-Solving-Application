@@ -10,83 +10,68 @@
 <p th:text="'TITLE: ' + ${selectedticket.getTitle()}"></p>
 <p th:text="'DESCRIPTION: ' + ${selectedticket.getDescription()}"></p>
 <p th:text="'PROPOSED SOLUTION: ' + ${selectedticket.getProposedSolution()}"></p>
-<p th:text="'PHOTO : ' + ${selectedticket.getTicketPhoto()}"></p>
+<p th:text="'PHOTO : '"></p>
+<img th:src="*{'data:photo/png;base64,'+photo}" alt="" />
 
 <hr>
 
 <p>COMMENTS:</p>
 
-<!--<table>-->
-<!--    <tr>-->
-<!--        <th>ID</th>-->
-<!--        <th>CREATED ON</th>-->
-<!--        <th>AUTHOR</th>-->
-<!--        <th>COMMENT</th>-->
-<!--    </tr>-->
+<table>
+    <tr>
+        <th>ID</th>
+        <th>CREATED ON</th>
+        <th>AUTHOR</th>
+        <th>COMMENT</th>
+    </tr>
 
 
-<!--    <tr th:each="comment : ${selectedticket.getComments()}">-->
-<!--        <td th:text="${comment.getId()}"></td>-->
-<!--        <td th:text=" ${comment.getCreatedOn()}"></td>-->
-<!--        <td th:text="${comment.getAuthor().getNameSurename()}"></td>-->
-<!--        <td th:text="${comment.getCommentDesc()}"></td>-->
+    <tr th:each="comment : ${selectedticket.getComments()}">
+        <td th:text="${comment.getId()}"></td>
+        <td th:text=" ${comment.getCreatedOn()}"></td>
+        <td th:text="${comment.getAuthor().getNameSurename()}"></td>
+        <td th:text="${comment.getCommentDesc()}"></td>
 
-<!--    </tr>-->
-<!--</table>-->
+    </tr>
+</table>
 
-<!--<form th:action="@{/tickets/{id}/comment/new (id=${selectedticket.getId()})}" method="post" th:object="${comment}">-->
+<form th:action="@{/tickets/{id}/comment/new (id=${selectedticket.getId()})}" method="post" th:object="${comment}">
 
-<!--    <div class="p-3 p-lg-5 border">-->
-<!--        <div class="form-group row">-->
-<!--            <div class="col-md-6">-->
-<!--                <label for="c_price" class="text-black">New Comment<span class="text-danger">*</span></label>-->
-<!--                <input type="text" class="form-control" id="c_price" th:field="*{commentDesc}">-->
+    <div class="p-3 p-lg-5 border">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">New Comment<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_price" th:field="*{commentDesc}">
 
-<!--            </div>-->
-<!--        </div>-->
+            </div>
+        </div>
 
-<!--        <div class="form-group row">-->
-<!--            <div class="col-lg-12">-->
-<!--                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Add Comment">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</form>-->
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Add Comment">
+            </div>
+        </div>
+    </div>
+</form>
 
 <br>
 <br>
 <br>
-<!--<div th:if="${currentuser.email.equals(selectedticket.author.email) or currentuser.email.equals(selectedticket.responsible.email)} and ${selectedticket.getStatus().toString().equals('OPEN')}">-->
-<!--    <form th:action="@{/tickets/{id}/close (id=${selectedticket.getId()})}" method="post">-->
-<!--        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">-->
+<div th:if="${currentuser.email.equals(selectedticket.author.email) or currentuser.email.equals(selectedticket.responsible.email)} and ${selectedticket.getStatus().toString().equals('OPEN')}">
+    <form th:action="@{/tickets/{id}/close (id=${selectedticket.getId()})}" method="post">
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">
 
-<!--    </form>-->
-<!--</div>-->
+    </form>
+</div>
 <hr>
 <!--adding photo-->
 <div>
-
-<!--    <div>-->
-<!--        <form th:object="${selectedticket}" method="POST" enctype="multipart/form-data" th:action="@{/tickets/upload}">-->
-<!--            <table>-->
-<!--                <tr><td>File to upload:</td><td><input type="file" name="file" th:field="*{ticketPhoto}" /></td></tr>-->
-<!--                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>-->
-<!--            </table>-->
-<!--        </form>-->
-<!--    </div>-->
-
     <form  class="form-horizontal" th:object="${selectedticket}" th:action="@{/tickets/__${selectedticket.getId()}__/upload}" method="post" enctype="multipart/form-data">
-<!--        <input type="hidden" th:field="*{id}"/>-->
-<!--        <div class="form-group">-->
-<!--            <label class="col-sm-2 control-label">Ticket Name</label>-->
-<!--            <div class="col-sm-10">-->
-<!--                <input class="form-control" th:field="*{description}"/>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="form-group">
             <label class="col-sm-2 control-label">Ticket Photo</label>
             <div class="col-sm-10">
-                <input name="file" type="file" class="form-control" th:field="*{ticketPhoto}"/>
+                <input name="file" type="file" class="form-control" th:field="*{ticketFormPhoto}"/>
+<!--                <p th:if="${#fields.hasErrors('ticketFormPhoto')}" th:text="${#fields.errors('ticketFormPhoto')}"></p>-->
             </div>
         </div>
         <div class="row">

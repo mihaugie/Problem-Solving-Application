@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
@@ -21,11 +20,9 @@ import pl.michalgailitis.psapplication.services.users.UserService;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -40,10 +37,11 @@ public class TicketController {
 
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) throws IOException {
-        final TicketForm selectedTicket = ticketService.getTicketFormById(id);
-
+        final TicketForm selectedticket = ticketService.getTicketFormById(id);
+//        Ticket selectedticket = ticketService.getTicketById(id);
+        modelMap.addAttribute("photo", selectedticket.getStringTicketPhoto());
         modelMap.addAllAttributes(Map.of(
-                "selectedticket", selectedTicket,
+                "selectedticket", selectedticket,
                 "comment", new Comment(),
                 "currentuser", userService.getUserById(principal.getName())));
         return "ticketdetails";
@@ -115,34 +113,9 @@ public class TicketController {
     }
 
     @PostMapping(value = "/{id}/upload")
-    public String saveTicket(@ModelAttribute("selectedticket") TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
-
-
+    public String savePhoto(@ModelAttribute("selectedticket") TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
         TicketForm ticketFormById = ticketService.getTicketFormById(id);
-        ticketFormById.setTicketPhoto(ticketForm.getTicketPhoto());
-        Ticket ticket = ticketMapper.createTicket(ticketFormById);
-
-
-//        System.out.println(ticketFormById);
-//        byte[] bytes = file.getBytes();
-//        ticketById.setTicketPhoto(bytes);
-
-//        uiModel.asMap().clear();
-//        //process upload file
-//        if(file != null) {
-//            byte[] filecontent = null;
-//            try
-//            {
-//                InputStream inputStream = file.getInputStream();
-//                if(inputStream == null)
-//                filecontent = IOUtils.toByteArray(inputStream);
-//                ticket.setTicketPhoto(filecontent);
-//            }catch(IOException ex) {
-//            }
-//            ticket.setTicketPhoto(filecontent);
-//        }
-
-        ticketRepository.save(ticket);
-        return "redirect:/ticketdetails/" + ticket.getId().toString();
+        ticketService.addPhoto(id, ticketForm.getTicketFormPhoto());
+        return "redirect:/tickets/" + ticketFormById.getId().toString();
     }
 }
