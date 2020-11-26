@@ -13,10 +13,15 @@ import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
+
+import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.services.tickets.TicketService;
+import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
+
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +34,19 @@ public class TicketController {
 
     private final TicketService ticketService;
     private final UserService userService;
+    private final TicketRepository ticketRepository;
+    private final TicketMapper ticketMapper;
 
     //TODO wrzucanie itemow do modelMapy w osobnej metodzie -
     //TODO pozmieniac konwencje na camelCase
 
     @GetMapping("/{id}")
-    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) {
-        final Ticket selectedTicket = ticketService.getTicketById(id);
-
+    public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) throws IOException {
+        final TicketForm selectedticket = ticketService.getTicketFormById(id);
+//        Ticket selectedticket = ticketService.getTicketById(id);
+        modelMap.addAttribute("photo", selectedticket.getStringTicketPhoto());
         modelMap.addAllAttributes(Map.of(
-                "selectedticket", selectedTicket,
+                "selectedticket", selectedticket,
                 "comment", new Comment(),
                 "currentuser", userService.getUserById(principal.getName())));
         return "ticketdetails";
@@ -64,7 +72,7 @@ public class TicketController {
     }
 //TODO wyswietlic "Successfull message" - stworzyc stringa, przeslac modelMApa i wyslac do strony redirect i wyswietlic  z th:if
     @PostMapping("/add")
-    public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) {
+    public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) throws IOException {
         if (errors.hasErrors()) {
             return "newTicket";
         }
@@ -92,8 +100,10 @@ public class TicketController {
         return "redirect:/tickets/page/1?sort-field=id&sort-dir=asc";
     }
 
+
     //TODO TicketSearchController - wyrzucic do osobnego Contr.
     // URL - http://localhost:10092/page/1?sort-field=firstName&sort-dir=desc
+
     @GetMapping(value = "/page/{page-number}")
     public String findPaginated(@PathVariable(name = "page-number") final int pageNo,
                                 @RequestParam(name = "sort-field") final String sortField,
@@ -101,9 +111,11 @@ public class TicketController {
                                 final Model model) {
         log.info("Getting the employees in a paginated way for page-number = {}, sort-field = {}, and "
                 + "sort-direction = {}.", pageNo, sortField, sortDir);
-        final int pageSize = 2;
+
+        final int pageSize = 5;
         final Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize, sortField, sortDir);
         final List<Ticket> listTickets = page.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
@@ -113,4 +125,12 @@ public class TicketController {
         model.addAttribute("listTickets", listTickets);
         return "ticketsView";
     }
+
+    @PostMapping(value = "/{id}/upload")
+    public String savePhoto(@ModelAttribute("selectedticket") TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
+        TicketForm ticketFormById = ticketService.getTicketFormById(id);
+        ticketService.addPhoto(id, ticketForm.getTicketFormPhoto());
+        return "redirect:/tickets/" + ticketFormById.getId().toString();
+    }
+
 }
