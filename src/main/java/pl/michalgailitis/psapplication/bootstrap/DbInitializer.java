@@ -2,6 +2,7 @@ package pl.michalgailitis.psapplication.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.michalgailitis.psapplication.domain.Comment;
@@ -17,6 +18,7 @@ import pl.michalgailitis.psapplication.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+@Profile("dev")
 @Component
 @RequiredArgsConstructor
 public class DbInitializer implements CommandLineRunner {
