@@ -21,26 +21,20 @@ import java.util.List;
 public class TicketForm {
 
     //TODO dodac message properties i w zaleznosci od locale tlumaczyc messages
-    //TODO dodac wiadomosc do notNulli
-
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Please provide title")
     private String title;
 
-    @NotNull
+    @NotNull(message = "Please provide description of an issue")
     @Length(min = 5, message = "Minimum lenght is 5")
     private String description;
 
-    @NotNull
+    @NotNull(message = "Please provide proposed solution")
     private String proposedSolution;
 
-    @NotNull
     private TicketType ticketType;
-
-    @NotNull
     private User responsible;
-
     private List<Comment> comments;
     private Status status;
     private User author;

@@ -13,11 +13,9 @@ import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
-
 import pl.michalgailitis.psapplication.repository.TicketRepository;
-import pl.michalgailitis.psapplication.services.tickets.TicketService;
 import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
-
+import pl.michalgailitis.psapplication.services.tickets.TicketService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import javax.validation.Valid;
@@ -29,7 +27,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/tickets")
+@RequestMapping(WebConstants.TICKETS_URL)
 public class TicketController {
 
     private final TicketService ticketService;
@@ -42,39 +40,39 @@ public class TicketController {
 
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) throws IOException {
-        final TicketForm selectedticket = ticketService.getTicketFormById(id);
+        final TicketForm selectedTicket = ticketService.getTicketFormById(id);
 //        Ticket selectedticket = ticketService.getTicketById(id);
-        modelMap.addAttribute("photo", selectedticket.getStringTicketPhoto());
+        modelMap.addAttribute("photo", selectedTicket.getStringTicketPhoto());
         modelMap.addAllAttributes(Map.of(
-                "selectedticket", selectedticket,
-                "comment", new Comment(),
-                "currentuser", userService.getUserById(principal.getName())));
-        return "ticketdetails";
+                WebConstants.SELECTED_TICKET_MODEL, selectedTicket,
+                WebConstants.COMMENT_MODEL, new Comment(),
+                WebConstants.CURRENT_USER_MODEL, userService.getUserById(principal.getName())));
+        return WebConstants.TICKET_DETAILS_VIEW;
     }
 
-    @GetMapping("/all")
+    @GetMapping(WebConstants.ALL_URL)
     public String getAllTickets(ModelMap modelMap, String keyword) {
         if (keyword != null) {
-            modelMap.addAttribute("tickets", ticketService.findByKeyword(keyword));
+            modelMap.addAttribute(WebConstants.TICKETS_MODEL, ticketService.findByKeyword(keyword));
         } else {
-            modelMap.addAttribute("tickets", ticketService.getAllTickets());
+            modelMap.addAttribute(WebConstants.TICKETS_MODEL, ticketService.getAllTickets());
         }
-        return "alltickets";
+        return WebConstants.ALL_TICKETS_VIEW;
     }
 
-    @GetMapping("/add")
+    @GetMapping(WebConstants.ADD_URL)
     public String getNewTicketForm(ModelMap modelMap) {
         modelMap.addAllAttributes(Map.of(
-                "ticketForm", new TicketForm(),
+                WebConstants.TICKET_FORM_MODEL, new TicketForm(),
                 "tickettypes", TicketType.allTypes(),
-                "users", userService.getAllUsers()));
-        return "newTicket";
+                WebConstants.USERS_MODEL, userService.getAllUsers()));
+        return WebConstants.NEW_TICKET_VIEW;
     }
 //TODO wyswietlic "Successfull message" - stworzyc stringa, przeslac modelMApa i wyslac do strony redirect i wyswietlic  z th:if
-    @PostMapping("/add")
-    public String addNewTicketForm(@Valid @ModelAttribute("ticketForm") final TicketForm ticketForm, final Errors errors) throws IOException {
+    @PostMapping(WebConstants.ADD_URL)
+    public String addNewTicketForm(@Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors) throws IOException {
         if (errors.hasErrors()) {
-            return "newTicket";
+            return WebConstants.NEW_TICKET_VIEW;
         }
         ticketService.createTicket(ticketForm);
 
@@ -123,11 +121,11 @@ public class TicketController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("listTickets", listTickets);
-        return "ticketsView";
+        return WebConstants.TICKETS_VIEW;
     }
 
     @PostMapping(value = "/{id}/upload")
-    public String savePhoto(@ModelAttribute("selectedticket") TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
+    public String savePhoto(@ModelAttribute(WebConstants.SELECTED_TICKET_MODEL) TicketForm ticketForm, @PathVariable(name = "id") Long id) throws IOException {
         TicketForm ticketFormById = ticketService.getTicketFormById(id);
         ticketService.addPhoto(id, ticketForm.getTicketFormPhoto());
         return "redirect:/tickets/" + ticketFormById.getId().toString();

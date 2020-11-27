@@ -2,6 +2,10 @@ package pl.michalgailitis.psapplication.services.tickets;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,17 +19,10 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
 import pl.michalgailitis.psapplication.services.CommentService;
 import pl.michalgailitis.psapplication.services.MailingMessages;
-import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -59,7 +56,7 @@ public class TicketService {
     public Set<Ticket> getTicketForUserDashboard(final Status status, final String email, final String keyword) {
         return ticketRepository.findForUserDashboard(status, email, keyword);
     }
-    
+
     public TicketForm getTicketFormById(Long id) throws IOException {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
 //        byte[] ticketPhoto = ticket.getTicketPhoto();
@@ -142,7 +139,7 @@ public class TicketService {
     }
 
 
-    public List<Ticket> findByKeyword(String keyword){
+    public List<Ticket> findByKeyword(String keyword) {
         return ticketRepository.findByKeyword(keyword);
     }
 

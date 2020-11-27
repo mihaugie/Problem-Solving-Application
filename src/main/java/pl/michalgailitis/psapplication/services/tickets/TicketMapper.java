@@ -11,7 +11,6 @@ import java.util.Base64;
 
 @Component
 //@RequiredArgsConstructor
-//@Transactional
 public class TicketMapper {
     public Ticket createTicket(TicketForm ticketForm) throws IOException {
         return Ticket.builder()
@@ -24,8 +23,7 @@ public class TicketMapper {
                 .build();
     }
 
-    public TicketForm createTicketForm(Ticket ticket) throws IOException {
-        TicketForm buildTicketForm = TicketForm.builder()
+    public TicketForm createTicketForm(Ticket ticket) throws IOException { TicketForm buildTicketForm = TicketForm.builder()
                 .id(ticket.getId())
                 .title(ticket.getTitle())
                 .description(ticket.getDescription())
@@ -43,4 +41,3 @@ public class TicketMapper {
         return buildTicketForm;
     }
 }
-//merguj MASTERA i rob PSA-24

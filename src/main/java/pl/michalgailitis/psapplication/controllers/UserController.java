@@ -27,20 +27,20 @@ public class UserController {
     @GetMapping
     public String showUsers(final ModelMap modelMap) {
         modelMap.addAllAttributes(Map.of(
-                "usersList", userService.getAllUsers(),
-                "roles", Role.allTypes()));
+                WebConstants.USERS_LIST_MODEL, userService.getAllUsers(),
+                WebConstants.ROLES_MODEL, Role.allTypes()));
         return WebConstants.USERS_URL;
     }
 
     @GetMapping(WebConstants.CREATE_URL)
     public String getUserForm(final ModelMap modelMap) {
         UserForm userForm = new UserForm();
-        modelMap.addAllAttributes(Map.of("userForm", userForm));
+        modelMap.addAllAttributes(Map.of(WebConstants.USER_FORM_MODEL, userForm));
         return WebConstants.NEWUSER_URL;
     }
 
     @PostMapping(WebConstants.CREATE_URL)
-    public String createUser(@Valid @ModelAttribute("userForm") final UserForm userForm, final Errors errors) {
+    public String createUser(@Valid @ModelAttribute(WebConstants.USER_FORM_MODEL) final UserForm userForm, final Errors errors) {
         if (errors.hasErrors()) {
             return WebConstants.NEWUSER_URL;
         }
@@ -48,19 +48,17 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/updateForm")
+    @PostMapping(WebConstants.UPDATE_FORM_URL)
     public String getUpdatedUserForm(final ModelMap modelMap, final User currentUser) {
         modelMap.addAllAttributes(Map.of(
-                "currentUser", currentUser,
-                "roles", Role.allTypes()));
-        return "userToUpdate";
+                WebConstants.CURRENT_USER_MODEL, currentUser,
+                WebConstants.ROLES_MODEL, Role.allTypes()));
+        return WebConstants.USER_TO_UPDATE_VIEW;
     }
 
-    //TODO inny sposob zwracania url
-    @PostMapping("/update")
+    @PostMapping(WebConstants.UPDATE_URL)
     public RedirectView updateUserForm(final User updatedUser) {
         userService.updateUserPartially(updatedUser);
-        return new RedirectView("/users");
-//        return "redirect:/users";
+        return new RedirectView(WebConstants.USERS_URL);
     }
 }

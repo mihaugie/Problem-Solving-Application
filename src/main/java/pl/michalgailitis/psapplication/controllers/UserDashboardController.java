@@ -13,7 +13,6 @@ import pl.michalgailitis.psapplication.services.users.UserInfoService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,9 +32,9 @@ public class UserDashboardController {
         Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword);
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
         modelMap.addAllAttributes(Map.of(
-                "username", currentUser,
-                "usertickets", ticketByAuthorOrResponsible,
-                "noofopentickets", noOfOpenTicketsForLoggedUser));
-        return "userdashboard";
+                WebConstants.CURRENT_USER_MODEL, currentUser,
+                WebConstants.USER_TICKETS_MODEL, ticketByAuthorOrResponsible,
+                WebConstants.NO_OF_OPEN_TICKETS_MODEL, noOfOpenTicketsForLoggedUser));
+        return WebConstants.USER_DASHBOARD_VIEW;
     }
 }

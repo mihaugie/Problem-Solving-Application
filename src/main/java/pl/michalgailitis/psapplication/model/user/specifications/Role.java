@@ -7,7 +7,7 @@ public enum Role {
     USER,
     ADMIN;
 
-    public static List<Role> allTypes(){
+    public static List<Role> allTypes() {
         return Arrays.asList(Role.values());
     }
 }
