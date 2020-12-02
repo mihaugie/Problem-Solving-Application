@@ -74,6 +74,10 @@ public class TicketService {
 
     }
 
+    public Set<Ticket> getFilteredTicketsForUserDashboard(final Status status, final String email, final String keyword) {
+        return ticketRepository.findForUserDashboard(status, email, keyword);
+    }
+
     public List<Ticket> getTicketByAuthor(final User authorId) {
         return ticketRepository.getAllByAuthor(authorId);
     }
@@ -139,8 +143,8 @@ public class TicketService {
     }
 
 
-    public List<Ticket> findByKeyword(String keyword) {
-        return ticketRepository.findByKeyword(keyword);
+    public Page<Ticket> findByKeyword(String keyword) {
+        return ticketRepository.findByKeyword(keyword, PageRequest.of(1,1));
     }
 
 

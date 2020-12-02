@@ -1,5 +1,7 @@
 package pl.michalgailitis.psapplication.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,8 +24,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> getAllByAuthor(User authorId);
 
-    @Query(value = "SELECT * FROM TICKETS t WHERE t.description LIKE %:keyword% OR t.proposed_solution LIKE %:keyword%", nativeQuery = true)
-    List<Ticket> findByKeyword(@Param("keyword") String keyword);
+//    @Query(value = "SELECT * FROM TICKETS t WHERE t.description LIKE %:keyword% OR t.proposed_solution LIKE %:keyword%", nativeQuery = true)
+//    List<Ticket> findByKeyword(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT t FROM tickets t WHERE t.description LIKE %:keyword% OR t.proposedSolution LIKE %:keyword%")
+    Page<Ticket> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     //TODO SORT:
     List<Ticket> findAllByOrderByStatusAsc();

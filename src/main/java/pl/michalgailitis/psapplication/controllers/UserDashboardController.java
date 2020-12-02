@@ -31,6 +31,13 @@ public class UserDashboardController {
         User currentUser = userService.getUserById(currentUserName);
         Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword);
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
+
+        if (keyword == null) {
+            modelMap.addAttribute(WebConstants.USER_TICKETS_MODEL, ticketByAuthorOrResponsible);
+        } else {
+            modelMap.addAttribute(WebConstants.USER_TICKETS_MODEL, ticketService.getFilteredTicketsForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword));
+        }
+
         modelMap.addAllAttributes(Map.of(
                 WebConstants.CURRENT_USER_MODEL, currentUser,
                 WebConstants.USER_TICKETS_MODEL, ticketByAuthorOrResponsible,
