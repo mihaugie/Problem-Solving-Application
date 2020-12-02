@@ -98,7 +98,6 @@ public class TicketController {
         return "redirect:/tickets/page/1?sort-field=id&sort-dir=asc";
     }
 
-
     //TODO TicketSearchController - wyrzucic do osobnego Contr.
     // URL - http://localhost:10092/page/1?sort-field=firstName&sort-dir=desc
 

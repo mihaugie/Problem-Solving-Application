@@ -1,8 +1,6 @@
 package pl.michalgailitis.psapplication.services.tickets;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
 
@@ -10,7 +8,6 @@ import java.io.IOException;
 import java.util.Base64;
 
 @Component
-//@RequiredArgsConstructor
 public class TicketMapper {
     public Ticket createTicket(TicketForm ticketForm) throws IOException {
         return Ticket.builder()
@@ -19,11 +16,11 @@ public class TicketMapper {
                 .proposedSolution(ticketForm.getProposedSolution())
                 .ticketType(ticketForm.getTicketType())
                 .responsible(ticketForm.getResponsible())
-//                .ticketPhoto(ticketForm.getTicketFormPhoto().getBytes())
                 .build();
     }
 
-    public TicketForm createTicketForm(Ticket ticket) throws IOException { TicketForm buildTicketForm = TicketForm.builder()
+    public TicketForm createTicketForm(Ticket ticket) throws IOException {
+        TicketForm buildTicketForm = TicketForm.builder()
                 .id(ticket.getId())
                 .title(ticket.getTitle())
                 .description(ticket.getDescription())

@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @Builder
 public class Comment {
 
-    //TODO usunac zduplikowana walicavje @NotNull
-
     @Id
     @GeneratedValue
     private Long id;
