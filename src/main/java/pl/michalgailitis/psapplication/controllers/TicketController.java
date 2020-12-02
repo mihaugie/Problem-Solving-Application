@@ -19,6 +19,7 @@ import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
 import pl.michalgailitis.psapplication.services.tickets.TicketService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
@@ -63,14 +64,27 @@ public class TicketController {
     public String getNewTicketForm(ModelMap modelMap) {
         modelMap.addAllAttributes(Map.of(
                 WebConstants.TICKET_FORM_MODEL, new TicketForm(),
-                "ticketTypes", TicketType.allTypes(),
+                WebConstants.TICKET_TYPES_MODEL, TicketType.allTypes(),
                 WebConstants.USERS_MODEL, userService.getAllUsers()));
         return WebConstants.NEW_TICKET_VIEW;
     }
 
-    @PostMapping(WebConstants.ADD_URL)
-    public String addNewTicketForm(@Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors, final RedirectAttributes redirectAttributes) throws IOException {
+//    @PostMapping(WebConstants.ADD_URL)
+//    public String addNewTicketForm(@Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors, final RedirectAttributes redirectAttributes) throws IOException {
+//        if (errors.hasErrors()) {
+//            return WebConstants.NEW_TICKET_VIEW;
+//        }
+//        ticketService.createTicket(ticketForm);
+//        redirectAttributes.addFlashAttribute( "newTicketMsg", WebConstants.NEW_TICKET_MESSAGE);
+//        return "redirect:/";
+//    }
+
+    @PostMapping("/add")
+    public String addNewTicketForm(ModelMap modelMap, @Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors, final RedirectAttributes redirectAttributes) throws IOException {
         if (errors.hasErrors()) {
+            modelMap.addAllAttributes(Map.of(
+                    WebConstants.TICKET_TYPES_MODEL, TicketType.allTypes(),
+                    WebConstants.USERS_MODEL, userService.getAllUsers()));
             return WebConstants.NEW_TICKET_VIEW;
         }
         ticketService.createTicket(ticketForm);
@@ -105,7 +119,8 @@ public class TicketController {
     public String findPaginated(@PathVariable(name = "page-number") final int pageNo,
                                 @RequestParam(name = "sort-field") final String sortField,
                                 @RequestParam(name = "sort-dir") final String sortDir,
-                                final Model model) {
+                                final Model model, HttpSession httpSession) {
+        Object keyword = httpSession.getAttribute("keyword");
         log.info("Getting the employees in a paginated way for page-number = {}, sort-field = {}, and "
                 + "sort-direction = {}.", pageNo, sortField, sortDir);
 

@@ -24,6 +24,7 @@ public interface WebConstants {
     String CURRENT_USER_MODEL = "currentUser";
     String COMMENT_MODEL = "comment";
     String TICKET_FORM_MODEL = "ticketForm";
+    String TICKET_TYPES_MODEL = "ticketTypes";
     String USER_FORM_MODEL = "userForm";
     String SELECTED_TICKET_MODEL = "selectedTicket";
     String USER_TICKETS_MODEL = "userTickets";
