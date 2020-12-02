@@ -9,7 +9,6 @@ import pl.michalgailitis.psapplication.model.user.specifications.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -24,15 +23,12 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @NotNull
     @Column(name = "password")
     private String password;
 
-    @NotNull
     @Column(name = "name_surename")
     private String nameSurename;
 
-    @NotNull
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;

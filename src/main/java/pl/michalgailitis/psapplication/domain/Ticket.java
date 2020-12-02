@@ -9,7 +9,6 @@ import pl.michalgailitis.psapplication.model.ticket.specifications.Status;
 import pl.michalgailitis.psapplication.model.ticket.specifications.TicketType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,18 +23,15 @@ public class Ticket {
     @GeneratedValue
     private Long id;
 
-    @NotNull
     @Column(name = "title")
     private String title;
 
-    @NotNull
     @Column(name = "description")
     private String description;
 
     @Column(name = "proposed_solution")
     private String proposedSolution;
 
-    @NotNull
     @Column(name = "ticket_type")
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
@@ -50,7 +46,11 @@ public class Ticket {
     @ManyToOne
     private User responsible;
 
-    @NotNull
+    @Lob
+    @Column(name = "ticket_photo")
+
+    private byte[] ticketPhoto;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -59,9 +59,7 @@ public class Ticket {
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
 
-    //MB usunąc nulle z konstruktora
-
-    public Ticket(@NotNull String title, @NotNull String description, @NotNull String proposedSolution, @NotNull TicketType ticketType, @NotNull LocalDate createdOn, @NotNull User author, @NotNull User responsible, @NotNull Status status, List<Comment> comments) {
+    public Ticket(String title, String description, String proposedSolution, TicketType ticketType, LocalDate createdOn, User author, User responsible, Status status, List<Comment> comments) {
         this.title = title;
         this.description = description;
         this.proposedSolution = proposedSolution;

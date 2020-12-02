@@ -2,8 +2,13 @@ package pl.michalgailitis.psapplication.services.tickets;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.domain.User;
@@ -14,13 +19,9 @@ import pl.michalgailitis.psapplication.repository.TicketRepository;
 import pl.michalgailitis.psapplication.repository.UserRepository;
 import pl.michalgailitis.psapplication.services.CommentService;
 import pl.michalgailitis.psapplication.services.MailingMessages;
-import pl.michalgailitis.psapplication.services.tickets.TicketMapper;
 import pl.michalgailitis.psapplication.services.users.UserInfoService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -47,11 +48,33 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException(String.format("There is no ticked with %d", id)));
     }
 
+
 //    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
 //        return ticketRepository.find(status, email);
 //    }
 
     public Set<Ticket> getTicketForUserDashboard(final Status status, final String email, final String keyword) {
+        return ticketRepository.findForUserDashboard(status, email, keyword);
+    }
+
+    public TicketForm getTicketFormById(Long id) throws IOException {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+//        byte[] ticketPhoto = ticket.getTicketPhoto();
+//        String photo = null;
+//        if(ticketPhoto!=null) {
+//            photo = Base64.getEncoder().encodeToString(ticketPhoto);
+//        }
+
+
+        return ticketMapper.createTicketForm(ticket);
+    }
+
+    public Set<Ticket> getTicketForUserDashboard(final Status status, final String email) {
+        return ticketRepository.find(status, email);
+
+    }
+
+    public Set<Ticket> getFilteredTicketsForUserDashboard(final Status status, final String email, final String keyword) {
         return ticketRepository.findForUserDashboard(status, email, keyword);
     }
 
@@ -63,7 +86,7 @@ public class TicketService {
         return ticketRepository.findTicketsByTitle(title);
     }
 
-    public Ticket createTicket(final TicketForm ticketForm) {
+    public Ticket createTicket(final TicketForm ticketForm) throws IOException {
         Ticket cretedTicket = ticketMapper.createTicket(ticketForm);
         cretedTicket.setStatus(Status.OPEN);
         cretedTicket.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
@@ -83,6 +106,7 @@ public class TicketService {
 
     }
 
+    //TODO uszczegolowic nazwy ze chodzi o ticket Comment
     public Ticket createComment(final Long id, final Comment newComment) {
         newComment.setAuthor(userRepository.findByEmail(userInfoService.getCurrentUserId()));
         Ticket ticketToAddComment = ticketRepository.findById(id).orElseThrow();
@@ -108,6 +132,7 @@ public class TicketService {
         return ticketRepository.save(ticketToClose);
     }
 
+    //TODO wyrzucic do Ticket SearchService, a tu zostawic TicketCRUDService
     public Page<Ticket> findPaginated(final int pageNumber, final int pageSize,
                                       final String sortField, final String sortDirection) {
         log.info("Fetching the paginated tickets from the dB.");
@@ -117,8 +142,19 @@ public class TicketService {
         return ticketRepository.findAll(pageable);
     }
 
-    public List<Ticket> findByKeyword(String keyword){
-        return ticketRepository.findByKeyword(keyword);
+
+    public Page<Ticket> findByKeyword(String keyword) {
+        return ticketRepository.findByKeyword(keyword, PageRequest.of(1,1));
+    }
+
+
+    public void addPhoto(final Long id, final MultipartFile photo) throws IOException {
+        Ticket ticketToBeUpdated = ticketRepository.findById(id).orElseThrow();
+
+        byte[] photoBytes = photo.getBytes();
+
+        ticketToBeUpdated.setTicketPhoto(photoBytes);
+
     }
 
 

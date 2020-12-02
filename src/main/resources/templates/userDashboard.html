@@ -17,23 +17,25 @@
 <p>
     <a href="../ticketsView.html" th:href="@{/tickets/}">VIEW SORTED TICKETS</a>
 </p>
-<div th:if="${username.getRole().toString().equals('ADMIN')}">
+<div th:if="${currentUser.getRole().toString().equals('ADMIN')}">
     <p>
         <a href="../users.html" th:href="@{/users}">VIEW ALL USERS</a>
     </p>
 </div>
 
 <br>
+<p style="color: crimson" th:if="${newTicketMsg}" th:text="${newTicketMsg}"></p>
+<p style="color: crimson" th:if="${tickedClosedMsg}" th:text="${tickedClosedMsg}"></p>
 
 <hr>
 <br>
 <h1>USER DASHBOARD</h1>
-<p th:text="'WELCOME: ' + ${username.getNameSurename()}"></p>
+<p th:text="'WELCOME: ' + ${currentUser.getNameSurename()}"></p>
 <p></p>
 
 <a1 th:text="'You have currently '"></a1>
 <a2 style="font-size: 3vw"><b>
-    <a1 style="color: crimson" th:text="${noofopentickets}"></a1>
+    <a1 style="color: crimson" th:text="${noOfOpenTickets}"></a1>
 </b></a2>
 <a1 th:text="' open tickets.'"></a1>
 
@@ -56,7 +58,7 @@
         <th>TICKET TYPE</th>
         <th>EDIT</th>
     </tr>
-    <tr th:each="ticket : ${usertickets}">
+    <tr th:each="ticket : ${userTickets}">
         <td th:text="${ticket.getId()}"></td>
         <td th:text="${ticket.getTitle()}"></td>
         <td th:text="${ticket.getDescription()}"></td>

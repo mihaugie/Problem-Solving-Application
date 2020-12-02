@@ -20,7 +20,12 @@
             <div class="col-md-6">
                 <label for="c_price" class="text-black">Description<span class="text-danger"></span></label>
                 <input type="text" class="form-control" id="c_price" th:field="*{description}" required>
-                <div th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}"></div>
+<!--                <div th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}"></div>-->
+                <div th:if="${#fields.hasErrors('description')}">
+                    <p th:each="err :${#fields.errors('description')}" th:text="${err}">
+
+                    </p>
+                </div>
             </div>
             <br>
             <div class="col-md-6">
@@ -31,7 +36,7 @@
             <div class="col-md-6">
                 <label for="c_price" class="text-black">DROPDOWN TicketType<span class="text-danger"></span></label>
                 <select th:field="*{ticketType}">
-                    <option th:each="ticketType : ${tickettypes}" th:text="${ticketType}"
+                    <option th:each="ticketType : ${ticketTypes}" th:text="${ticketType}"
                             th:value="${ticketType}"></option>
                 </select>
             </div>

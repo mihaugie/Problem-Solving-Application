@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -20,7 +19,6 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    @NotNull
     @Column(name = "comment_desc")
     private String commentDesc;
 
@@ -28,7 +26,6 @@ public class Comment {
     @CreationTimestamp
     private LocalDate createdOn;
 
-    @NotNull
     @ManyToOne
     private User author;
 
@@ -72,7 +69,7 @@ public class Comment {
         this.author = author;
     }
 
-    public Comment(@NotNull String commentDesc, @NotNull LocalDate createdOn, @NotNull User author, Ticket ticket) {
+    public Comment(String commentDesc, LocalDate createdOn, User author, Ticket ticket) {
         this.commentDesc = commentDesc;
         this.createdOn = createdOn;
         this.author = author;

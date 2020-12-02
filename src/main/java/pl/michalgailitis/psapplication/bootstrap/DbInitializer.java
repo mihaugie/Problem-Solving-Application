@@ -2,6 +2,7 @@ package pl.michalgailitis.psapplication.bootstrap;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.michalgailitis.psapplication.domain.Comment;
@@ -17,6 +18,7 @@ import pl.michalgailitis.psapplication.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 
+@Profile("dev")
 @Component
 @RequiredArgsConstructor
 public class DbInitializer implements CommandLineRunner {
@@ -44,6 +46,8 @@ public class DbInitializer implements CommandLineRunner {
         createComment(TestConsts.COMMENT_DESC_4, LocalDate.now(), user2, ticket2);
         createComment(TestConsts.COMMENT_DESC_5, LocalDate.now(), user3, ticket3);
         createComment(TestConsts.COMMENT_DESC_6, LocalDate.now(), user3, ticket4);
+
+        System.out.println("test");
     }
 
     private Ticket createTicket(String title, String description, String proposedSolution, TicketType ticketType, LocalDate createdOn, User author, User responsible, Status status) {

@@ -13,7 +13,6 @@ import pl.michalgailitis.psapplication.services.users.UserInfoService;
 import pl.michalgailitis.psapplication.services.users.UserService;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,14 +27,20 @@ public class UserDashboardController {
 
     @GetMapping
     public String userDashboard(final ModelMap modelMap, @AuthenticationPrincipal Principal principal, String keyword) {
-        String currentUserName = userInfoService.getCurrentUserId();
-        User currentUser = userService.getUserById(currentUserName);
-        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword);
+        User currentUser = userService.getUserById(principal.getName());
+        Set<Ticket> ticketByAuthorOrResponsible = ticketService.getTicketForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName());
         int noOfOpenTicketsForLoggedUser = ticketByAuthorOrResponsible.size();
+
+        if (keyword == "") {
+            modelMap.addAttribute(WebConstants.USER_TICKETS_MODEL, ticketByAuthorOrResponsible);
+        } else {
+            modelMap.addAttribute(WebConstants.USER_TICKETS_MODEL, ticketService.getFilteredTicketsForUserDashboard(WebConstants.USERSTATUS_OPEN, principal.getName(), keyword));
+        }
+
         modelMap.addAllAttributes(Map.of(
-                "username", currentUser,
-                "usertickets", ticketByAuthorOrResponsible,
-                "noofopentickets", noOfOpenTicketsForLoggedUser));
-        return "userdashboard";
+                WebConstants.CURRENT_USER_MODEL, currentUser,
+                WebConstants.USER_TICKETS_MODEL, ticketByAuthorOrResponsible,
+                WebConstants.NO_OF_OPEN_TICKETS_MODEL, noOfOpenTicketsForLoggedUser));
+        return WebConstants.USER_DASHBOARD_VIEW;
     }
 }

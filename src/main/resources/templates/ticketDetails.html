@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>TICKET DETAILS:</h1>
+<p th:text="'ID: ' + ${selectedTicket.getId()}"></p>
+<p th:text="'TITLE: ' + ${selectedTicket.getTitle()}"></p>
+<p th:text="'DESCRIPTION: ' + ${selectedTicket.getDescription()}"></p>
+<p th:text="'PROPOSED SOLUTION: ' + ${selectedTicket.getProposedSolution()}"></p>
+<p th:text="'PHOTO : '"></p>
+<img th:src="*{'data:photo/png;base64,'+photo}" alt="" />
+
+<hr>
+
+<p>COMMENTS:</p>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>CREATED ON</th>
+        <th>AUTHOR</th>
+        <th>COMMENT</th>
+    </tr>
+
+
+    <tr th:each="comment : ${selectedTicket.getComments()}">
+        <td th:text="${comment.getId()}"></td>
+        <td th:text=" ${comment.getCreatedOn()}"></td>
+        <td th:text="${comment.getAuthor().getNameSurename()}"></td>
+        <td th:text="${comment.getCommentDesc()}"></td>
+
+    </tr>
+</table>
+
+<form th:action="@{/tickets/{id}/comment/new (id=${selectedTicket.getId()})}" method="post" th:object="${comment}">
+
+    <div class="p-3 p-lg-5 border">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="c_price" class="text-black">New Comment<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c_price" th:field="*{commentDesc}">
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Add Comment">
+            </div>
+        </div>
+    </div>
+</form>
+
+<br>
+<br>
+<br>
+<div th:if="${currentUser.email.equals(selectedTicket.author.email) or currentUser.email.equals(selectedTicket.responsible.email)} and ${selectedTicket.getStatus().toString().equals('OPEN')}">
+    <form th:action="@{/tickets/{id}/close (id=${selectedTicket.getId()})}" method="post">
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Close Ticket">
+
+    </form>
+</div>
+<hr>
+<!--adding photo-->
+<div>
+    <form  class="form-horizontal" th:object="${selectedTicket}" th:action="@{/tickets/__${selectedTicket.getId()}__/upload}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Ticket Photo</label>
+            <div class="col-sm-10">
+                <input name="file" type="file" class="form-control" th:field="*{ticketFormPhoto}"/>
+<!--                <p th:if="${#fields.hasErrors('ticketFormPhoto')}" th:text="${#fields.errors('ticketFormPhoto')}"></p>-->
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+    </form>
+</div>
+
+
+<p>
+    <a href="../home.html" th:href="@{/}">Return to home</a>
+</p>
+
+</body>
+</html>

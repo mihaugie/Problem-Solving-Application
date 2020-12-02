@@ -16,15 +16,15 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class UserForm {
 
-    @NotBlank
+    @NotBlank(message = "Please provide email")
     @Email(message = "Needs to have email format")
     private String email;
 
-    @NotNull
+    @NotNull(message = "Please provide password")
     @Length(min = 3, message = "Minumum password length is 3")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Please provide name and lastname")
     @Length(min = 3, message = "Minimum length is 3")
     private String nameSurename;
 
