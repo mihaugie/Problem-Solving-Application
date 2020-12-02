@@ -30,4 +30,6 @@ public interface WebConstants {
     String NO_OF_OPEN_TICKETS_MODEL = "noOfOpenTickets";
     String ADD_URL = "/add";
     String ALL_URL = "/all";
+    String NEW_TICKET_MESSAGE = "New ticket was created!";
+    String TICKET_CLOSED_MESSAGE = "Ticked was closed.";
 }

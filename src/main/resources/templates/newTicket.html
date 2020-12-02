@@ -31,7 +31,7 @@
             <div class="col-md-6">
                 <label for="c_price" class="text-black">DROPDOWN TicketType<span class="text-danger"></span></label>
                 <select th:field="*{ticketType}">
-                    <option th:each="ticketType : ${tickettypes}" th:text="${ticketType}"
+                    <option th:each="ticketType : ${ticketTypes}" th:text="${ticketType}"
                             th:value="${ticketType}"></option>
                 </select>
             </div>

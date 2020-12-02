@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.michalgailitis.psapplication.domain.Comment;
 import pl.michalgailitis.psapplication.domain.Ticket;
 import pl.michalgailitis.psapplication.model.TicketForm;
@@ -35,8 +36,6 @@ public class TicketController {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
 
-    //TODO wrzucanie itemow do modelMapy w osobnej metodzie -
-    //TODO pozmieniac konwencje na camelCase
 
     @GetMapping("/{id}")
     public String getTicketDetails(final ModelMap modelMap, @PathVariable final Long id, @AuthenticationPrincipal Principal principal) throws IOException {
@@ -64,18 +63,18 @@ public class TicketController {
     public String getNewTicketForm(ModelMap modelMap) {
         modelMap.addAllAttributes(Map.of(
                 WebConstants.TICKET_FORM_MODEL, new TicketForm(),
-                "tickettypes", TicketType.allTypes(),
+                "ticketTypes", TicketType.allTypes(),
                 WebConstants.USERS_MODEL, userService.getAllUsers()));
         return WebConstants.NEW_TICKET_VIEW;
     }
-//TODO wyswietlic "Successfull message" - stworzyc stringa, przeslac modelMApa i wyslac do strony redirect i wyswietlic  z th:if
+
     @PostMapping(WebConstants.ADD_URL)
-    public String addNewTicketForm(@Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors) throws IOException {
+    public String addNewTicketForm(@Valid @ModelAttribute(WebConstants.TICKET_FORM_MODEL) final TicketForm ticketForm, final Errors errors, final RedirectAttributes redirectAttributes) throws IOException {
         if (errors.hasErrors()) {
             return WebConstants.NEW_TICKET_VIEW;
         }
         ticketService.createTicket(ticketForm);
-
+        redirectAttributes.addFlashAttribute( "newTicketMsg", WebConstants.NEW_TICKET_MESSAGE);
         return "redirect:/";
     }
 
@@ -86,8 +85,9 @@ public class TicketController {
     }
 
     @PostMapping("/{id}/close")
-    public String closeTicket(@PathVariable Long id) {
+    public String closeTicket(@PathVariable Long id, final RedirectAttributes redirectAttributes) {
         ticketService.closeTicket(id);
+        redirectAttributes.addFlashAttribute( "tickedClosedMsg", WebConstants.TICKET_CLOSED_MESSAGE);
         return "redirect:/";
     }
 

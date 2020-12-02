@@ -23,8 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DbInitializer implements CommandLineRunner {
 
-    //TODO dodac caly component do profilu dev - spring sczytuje nazwe profilu z nazwy pliku properties po "-"
-
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final TicketRepository ticketRepository;
